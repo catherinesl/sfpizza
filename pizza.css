@@ -1,0 +1,106 @@
+body {
+  background: url("assets/pizza.jpg");
+font-family: 'Josefin Sans', sans-serif;
+margin:0;
+text-align:center;
+}
+
+
+#apiinput {
+    background-color: black;
+    width: 25%;
+    height: 350px;
+    padding: 30px;
+    position: absolute;
+    left: calc((100% - 25%)/2);
+    background: rgb(54, 25, 25); /* Fall-back for browsers that don't
+                                   support rgba */
+    background: rgba(0, 0, 0, 0.86);
+    top: 250px;
+    /* transform: translate(0%, -50%); */
+}
+
+#title {
+    left: calc((100% - 100%px)/2);
+    color:white;
+    position: absolute;
+    width: 100%;
+    font-size: 25px;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.25);
+    letter-spacing: 5px;
+    padding-top: 15px;
+    top: 0px;
+    height: 140px;
+}
+
+#menu {
+        background-color: rgb(0, 0, 0);
+    position: absolute;
+    right: 0px;
+    float: right;
+    color: white;
+    display: block;
+    /* padding-top: 20px; */
+    /* padding-bottom: 20px; */
+    text-align: center;
+    width: 100%;
+    top: 138px;
+}
+
+.option {
+    display: inline;
+    /* margin-left: 20px; */
+    /* margin-right: 20px; */
+    float: right;
+    letter-spacing: 2px;
+    padding: 26px;
+    /* width: 215px; */
+}
+
+.option:hover {
+  background-color: rgb(76, 123, 22);
+  cursor:pointer;
+}
+
+
+#chat_tab {
+    /* color: #FF9800; */
+    background-color: rgba(152, 25, 25, 0.89);
+    padding-top: 26px;
+    padding-bottom: 26px;
+}
+
+
+#input {
+    width: 100%;
+}
+
+
+#space {
+    background-color: white;
+    height: 90%;
+    text-align:left;
+    overflow: scroll;
+}
+
+.textarea, input{
+  outline: none;
+}
+
+#rec {
+    background-color: #555555; /* Green */
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    right: 30px;
+    position: absolute;
+    bottom: 45px;
+}
+
+p {
+  color:blue;
+}

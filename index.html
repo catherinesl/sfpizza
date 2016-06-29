@@ -1,0 +1,148 @@
+<html>
+<head>
+	<title>Catherine's Pizza Delivery</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" type="text/css" href="pizza.css">
+<link href='https://fonts.googleapis.com/css?family=Questrial|Fjalla+One|Arimo|Josefin+Sans' rel='stylesheet' type='text/css'>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+	<script type="text/javascript">
+		var outputString = "";
+		var dialogueCounter = 0;
+		var previousResponse = "Hello there! How may I help you today? I can help you do the following things:";
+		var accessToken = "3345970f25e64eaf9657ba5494ce0595";
+		var baseUrl = "https://api.api.ai/v1/";
+		$(document).ready(function() {
+				setResponse(previousResponse);
+			$("#input").keypress(function(event) {
+				if (event.which == 13) {
+					event.preventDefault();
+					send();
+					$(this).val("");
+				}
+			});
+			$("#rec").click(function(event) {
+				send();
+				$(this).val("");
+			});
+			// $( "p" ).append( "</br><strong>Hello</strong>" );
+		});
+		var recognition;
+		function startRecognition() {
+			recognition = new webkitSpeechRecognition();
+			recognition.onstart = function(event) {
+				updateRec();
+			};
+			recognition.onresult = function(event) {
+				var text = "";
+			    for (var i = event.resultIndex; i < event.results.length; ++i) {
+			    	text += event.results[i][0].transcript;
+			    }
+			    setInput(text);
+				stopRecognition();
+			};
+			recognition.onend = function() {
+				stopRecognition();
+			};
+			recognition.lang = "en-US";
+			recognition.start();
+		}
+
+		function stopRecognition() {
+			if (recognition) {
+				recognition.stop();
+				recognition = null;
+			}
+			updateRec();
+		}
+		function switchRecognition() {
+			if (recognition) {
+				stopRecognition();
+			} else {
+				startRecognition();
+			}
+		}
+		function setInput(text) {
+			$("#input").val(text);
+			send();
+		}
+		function updateRec() {
+			$("#rec").text(recognition ? "Stop" : "Speak");
+		}
+		function send() {
+			var text = $("#input").val();
+
+			$.ajax({
+				type: "POST",
+				url: baseUrl + "query/",
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				headers: {
+					"Authorization": "Bearer " + accessToken
+				},
+				data: JSON.stringify({ q: text, lang: "en" }),
+				success: function(data) {
+					if (data.result.speech == null || data.result.speech == "") {
+						fallbackResponse = "I'm sorry, I did not quite understand that." + previousResponse;
+						setResponse(fallbackResponse);
+					} else {
+						previousResponse = data.result.speech;
+						normalResponse = data.result.speech;
+						setResponse(normalResponse);
+					}
+				},
+				error: function() {
+					setResponse("Internal Server Error");
+				}
+			});
+			// setResponse("Loading...");
+		}
+		function setResponse(val, userResponse) {
+				if (dialogueCounter == 0 && val != null && val != "") {
+					var newhtml = "<b>Catherine: </b>" + outputString + "</br>" + val;
+					$("#space").html(newhtml);
+					outputString = newhtml + "</br></br>" + "<b>Catherine: </b>";
+					dialogueCounter = 1;
+				}
+				else if (val != null && val != "") {
+					var newhtml = outputString + "</br>" + val;
+					$("#space").html(newhtml);
+					outputString = newhtml + "</br></br>" + "<b>Catherine: </b>";
+				}
+				var scrolling = document.getElementById("space");
+				scrolling.scrollTop = scrolling.scrollHeight;
+		}
+
+	</script>
+	<style type="text/css">
+		body { width: 500px; margin: 0 auto; text-align: center; margin-top: 20px; }
+		input { width: 400px; }
+		button { width: 50px; }
+		textarea { width: 100%; }
+	</style>
+</head>
+<body>
+
+  <div id = "title"><h1>Catherine's Pizza Delivery</h1></div>
+  <div id = "menu">
+    <div class = "option">Contact Us</div>
+      <div class = "option" id = "chat_tab">Chat Bot Service</div>
+        <div class = "option">Reviews</div>
+          <div class = "option">Make a Reservation</div>
+            <div class = "option">Menu</div>
+
+
+
+  </div>
+</br>
+
+  <!-- <div id = "intro">How may I help you today?</div> -->
+	<!-- <p>I would like to say: </p> -->
+
+	<div id = "apiinput">
+		<div id = "space"></div>
+    <input id="input" autocomplete="off" type="text"> <button id="rec">Send</button>
+	</div>
+
+</body>
+</html>

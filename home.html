@@ -13,12 +13,14 @@
 		var accessToken = "3345970f25e64eaf9657ba5494ce0595";
 		var baseUrl = "https://api.api.ai/v1/";
 		$(document).ready(function() {
-				setResponse(previousResponse);
+			setResponse(previousResponse);
 			$("#input").keypress(function(event) {
 				if (event.which == 13) {
 					event.preventDefault();
 					send();
+					// var userInput = $(this).val();
 					$(this).val("");
+					// $("#space").append(html(userInput));
 				}
 			});
 			$("#rec").click(function(event) {
@@ -84,11 +86,11 @@
 				success: function(data) {
 					if (data.result.speech == null || data.result.speech == "") {
 						fallbackResponse = "I'm sorry, I did not quite understand that." + previousResponse;
-						setResponse(fallbackResponse);
+						setResponse(fallbackResponse, text);
 					} else {
 						previousResponse = data.result.speech;
 						normalResponse = data.result.speech;
-						setResponse(normalResponse);
+						setResponse(normalResponse, text);
 					}
 				},
 				error: function() {
@@ -99,15 +101,15 @@
 		}
 		function setResponse(val, userResponse) {
 				if (dialogueCounter == 0 && val != null && val != "") {
-					var newhtml = "<b>Catherine: </b>" + outputString + "</br>" + val;
-					$("#space").html(newhtml);
-					outputString = newhtml + "</br></br>" + "<b>Catherine: </b>";
+					var newHtml = "<b>Catherine: </b>" + outputString + "</br>" + val;
+					$("#space").html(newHtml);
+					outputString = newHtml +  "</br></br>";
 					dialogueCounter = 1;
 				}
 				else if (val != null && val != "") {
-					var newhtml = outputString + "</br>" + val;
-					$("#space").html(newhtml);
-					outputString = newhtml + "</br></br>" + "<b>Catherine: </b>";
+					var newHtml = outputString + "<b>You: </b>" + userResponse + "</br></br><b>Catherine: </b>" + val;
+					outputString = newHtml + "</br></br>";
+					$("#space").html(newHtml);
 				}
 				var scrolling = document.getElementById("space");
 				scrolling.scrollTop = scrolling.scrollHeight;
@@ -126,13 +128,10 @@
   <div id = "title"><h1>Catherine's Pizza Delivery</h1></div>
   <div id = "menu">
     <div class = "option">Contact Us</div>
-      <div class = "option" id = "chat_tab">Chat Bot Service</div>
-        <div class = "option">Reviews</div>
-          <div class = "option">Make a Reservation</div>
-            <div class = "option">Menu</div>
-
-
-
+    <div class = "option" id = "chat_tab">Chat Bot Service</div>
+    <div class = "option">Reviews</div>
+    <div class = "option">Make a Reservation</div>
+	  <div class = "option">Menu</div>
   </div>
 </br>
 

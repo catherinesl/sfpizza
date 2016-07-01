@@ -29,17 +29,31 @@
     <li><img src="assets/hawaiian.jpg" width="480px"></img></li>
     <li><img src="assets/vegetarian.jpg" width="480px"></img></li>
   </ul>
+
+  <div class = "car_nav" id = "left">Left</div>
+</br>
+  <div class = "car_nav" id = "right">Right</div>
 </div>
   <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
   <script type="text/javascript">
   $(document).ready(function(){
-  	// Set the interval to be 5 seconds
-    var t = setInterval(function(){
-		$("#carousel ul").animate({marginLeft:-480},1000,function(){
-			$(this).find("li:last").after($(this).find("li:first"));
-			$(this).css({marginLeft:0});
-		})
-	},1000);
+    $("#left").click(function(event) {
+  		$("#carousel ul").animate({marginLeft:-480},"slow, 1000",function(){
+  			$(this).find("li:last").after($(this).find("li:first"));
+  			$(this).css({marginLeft:0});
+  		});
+	   });
+     $("#right").click(function(event) {
+   		$("#carousel ul").animate({marginLeft:480},"slow, 1000", function(){
+   			$(this).find("li:first").after($(this).find("li:last"));
+        $(this).find("li:last").after($(this).find("li:first"));
+        $(this).find("li:first").after($(this).find("li:last"));
+   			$(this).css({marginLeft:0});
+   		});
+ 	   });
+
+
+
 
 
   });

@@ -29,15 +29,19 @@
 				$(this).val("");
 			});
 			/**Changes bot service based on user's initial selection of service. */
-			$(".button").click(function(event){
+			$(".button").on('click', (function(event){
+				event.preventDefault();
 				console.log("button is clicked!");
-				// var selection = $(this).attr("value");
-				// if (selection == "Edit order") {
-				// 	accessToken = "def5c7f6f5f0410e90412f10fafb0e00";
-				// }
-				// send(selection);
-				// return;
-			})
+				var selection = $(this).attr('value');
+				if (selection == "Edit order") {
+					accessToken = "def5c7f6f5f0410e90412f10fafb0e00";
+				}
+				send(selection);
+				return;
+			}));
+
+
+
 		});
 		var recognition;
 		function startRecognition() {
@@ -139,7 +143,7 @@
 			// var enhancedNumber = enhancedChecker(botResponse);
 			switch(botResponse) {
 				case "Hello there! How may I help you today? I can help you do the following things:":
-					return "<span></br><button class = 'button' id='place_order_button' value = 'Place order'>Place Order</button><button class = 'button' id='edit_order_button' value = 'Edit order'>Edit Order</button><button class = 'button' id='cancel_order_button' value='Cancel order'>Cancel Order</button></span>";
+					return "<span></br><button class = 'button' value = 'Place Order'>Place Order</button><button class = 'button' value = 'Edit Order'>Edit Order</button><button class = 'button' value='cancel Order'>Cancel Order</button></span>";
 				case 2:
 					break;
 				case 3:

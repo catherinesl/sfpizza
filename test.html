@@ -18,21 +18,48 @@
 		list-style: none;
 		float:	left;
 	}
+
+.car_nav#right {
+	display: inline;margin-left: 320px;
+}
+
+
+.car_nav#left {
+    display: inline;
+}
+
+#nav_container {
+    height: 280px;
+    line-height: 280px;
+    position: absolute;
+    top: 0px;
+}
+
+img {
+    margin-right: 82px;
+    margin-top: 30px;
+}
+
+.topping {
+	position: absolute;
+	top: 8px;
+	left: 140px;
+}
 </style>
 
 </head>
 <body>
 <div id = "carousel">
   <ul>
-    <li ><img src="assets/pepperoni.jpg" width="480px"></img></li>
-    <li><img src="assets/cheese.jpg" width="480px"></img></li>
-    <li><img src="assets/hawaiian.jpg" width="480px"></img></li>
-    <li><img src="assets/vegetarian.jpg" width="480px"></img></li>
+    <li ><img src="assets/pepperoni.jpg" width="380px"><div class = "topping"></div></img></li>
+    <li><img src="assets/cheese.jpg" width="380px"><div class = "topping"></div></img></li>
+    <li><img src="assets/hawaiian.jpg" width="330px"><div class = "topping"></div></img></li>
+    <li><img src="assets/vegetarian.jpg" width="380px"><div class = "topping">Pepperoni</div></img></li>
   </ul>
-
-  <div class = "car_nav" id = "left">Left</div>
-</br>
-  <div class = "car_nav" id = "right">Right</div>
+</div>
+<div id = "nav_container">
+<div class = "car_nav" id = "left">&#9664;</div>
+<div class = "car_nav" id = "right">&#9654;</div>
 </div>
   <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
   <script type="text/javascript">
@@ -44,6 +71,7 @@
   		});
 	   });
      $("#right").click(function(event) {
+
    		$("#carousel ul").animate({marginLeft:480},"slow, 1000", function(){
    			$(this).find("li:first").after($(this).find("li:last"));
         $(this).find("li:last").after($(this).find("li:first"));

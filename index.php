@@ -276,7 +276,6 @@
 	</script>
 </head>
 <body>
-	<?php include 'payment.php';?>
   <div id = "title"><h1>Catherine's Pizza Delivery</h1></div>
   <div id = "menu">
     <div class = "option">Contact Us</div>

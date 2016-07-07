@@ -7,6 +7,7 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 	<script type="text/javascript">
+		var toGoogleTravelTime = false;
 		var hardOrderNums = [];
 		const fallBackPossibilities = ["Please continue...", "Ahh, tell me more.", "Yes, indeed indeed.", "Come, elucidate your thoughts", "Sorry, I didn't quite understand that. Do you mind repeating yourself again?"];
 		var outputString = "";
@@ -28,8 +29,7 @@
 			$("#rec").click(function(event) {
 				send();
 				$(this).val("");
-				p1ToP2();
-				p2ToP3();
+
 			});
 			/**Changes bot service based on user's initial selection of service. */
 			$(window).load(function() {
@@ -46,30 +46,6 @@
 				}));
 				/**Carousel event handler goes here.*/
 				loadCarousel();
-				// $("body").on('click', "#left", function(event) {
-				// 					 console.log("suh duh left");
-				// 	$("#carousel ul").animate({marginLeft:-480},"slow, 1000",function(){
-				// 		$(this).find("li:last").after($(this).find("li:first"));
-				// 		$(this).css({marginLeft:0});
-				// 	});
-				//  });
-				//  $("body").on('click', '#right', function(event) {
-				// 	 console.log("suh duh right");
-				// 	$("#carousel ul").animate({marginLeft:480},"slow, 1000", function(){
-				// 		$(this).find("li:first").after($(this).find("li:last"));
-				// 		$(this).find("li:last").after($(this).find("li:first"));
-				// 		$(this).find("li:first").after($(this).find("li:last"));
-				// 		$(this).css({marginLeft:0});
-				// 	});
-				//  });
-				//  $("body").on('click', "img", (function(event){
- 			// 		// event.preventDefault();
-				// 	var selection = $(this).attr('value');
- 			// 		console.log("img is clicked!");
- 			// 		send(selection);
- 			// 		return;
- 			// 	}));
-
 			});
 
 		});
@@ -171,24 +147,34 @@
 		}
 		/** Normal text responses formatted here. */
 		function setResponse(val, userResponse) {
-				if (dialogueCounter == 0 && val != null && val != "") {
-					var enNum = setEnhancedResponse(val);
-					var newHtml = "<b>Catherine:</b>" + outputString + "</br>" + val + enNum;
-					$("#space").html(newHtml);
-					outputString = newHtml +  "</br></br>";
-					dialogueCounter = 1;
-				}
-				else if (val != null && val != "") {
-					var enNum = setEnhancedResponse(val);
-					if (enNum != undefined) {
-						var newHtml = outputString + "<b>You: </b>" + userResponse + "</br></br><b>Catherine: </b>" + val + enNum;
-						disableInput();
+
+			//
+			// var d1 = document.getElementById('one');
+			// d1.insertAdjacentHTML('beforeend', '<div id="two">two</div>');
+
+
+			// var spaceInner = document.getElementById('#space');
+			// spaceInner.insertAdjacentHTML('beforeend', val + "</br></br>");
+				if (val != null && val != "") {
+					if (dialogueCounter == 0) {
+						var enhancedResponse = setEnhancedResponse(val);
+						var spaceInner = document.getElementById('space');
+						var innerResponse = "Catherine: " + val + enhancedResponse + "</br></br>"
+						spaceInner.insertAdjacentHTML('beforeend', innerResponse);
+						dialogueCounter = 1;
 					} else {
-						var newHtml = outputString + "<b>You: </b>" + userResponse + "</br></br><b>Catherine: </b>" + val;
-						enableInput();
+						var enhancedResponse = setEnhancedResponse(val);
+						if (enhancedResponse != undefined) {
+							var innerResponse = "<b>You: </b>" + userResponse + "</br></br><b>Catherine: </b>" + val + enhancedResponse;
+							disableInput();
+						} else {
+							var innerResponse = "<b>You: </b>" + userResponse + "</br></br><b>Catherine: </b>" + val;
+							enableInput();
+						}
+						var spaceInner = document.getElementById('space');
+						var innerResponse = "Catherine: " + val + enhancedResponse + "</br></br>"
+						spaceInner.insertAdjacentHTML('beforeend', innerResponse);
 					}
-					$("#space").html(newHtml);
-					outputString = newHtml + "</br></br>";
 				}
 				var scrolling = document.getElementById("space");
 				scrolling.scrollTop = scrolling.scrollHeight;
@@ -239,9 +225,13 @@
 			if (botResponse.includes("Very well. Would you like your pizza baked normally or extra baked?")) {
 				return "<span></br><button class = 'button' id='normally_baked_button' value = 'Normally baked.'>Normally Baked</button><button class = 'button' id='extra_baked_button' value = 'Extra Baked'>Extra Baked</button></span>";
 			}
-			if (botResponse.includes("Please enter your phone number to confirm.")) {
-				return "<span><input id='phone_p1'></input>-<input id='phone_p2'></input>-<input id='phone_p3'></input></span>";
+			if (botResponse.includes("Where should I deliver it to?")) {
+				toGoogleTravelTime = true;
+				return "<span></br><button class = 'button' id='normally_baked_button' value = 'Normally baked.'>Normally Baked</button><button class = 'button' id='extra_baked_button' value = 'Extra Baked'>Extra Baked</button></span>";
 			}
+			// if (botResponse.includes("Please enter your phone number to confirm.")) {
+			// 	return "<span><input id='phone_p1'></input>-<input id='phone_p2'></input>-<input id='phone_p3'></input></span>";
+			// }
 		}
 
 

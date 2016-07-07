@@ -277,7 +277,7 @@
 </head>
 <body>
 	<div id = "php_part">
-	<?php include 'menu.php';?>
+	<?php include 'payment.php';?>
 </div>
   <div id = "title"><h1>Catherine's Pizza Delivery</h1></div>
   <div id = "menu">

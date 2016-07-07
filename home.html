@@ -145,40 +145,23 @@
 				return;
 				}));
 		}
-		/** Normal text responses formatted here. */
+		/** Normal text responses from Catherine formatted here. */
 		function setResponse(val, userResponse) {
-
-			//
-			// var d1 = document.getElementById('one');
-			// d1.insertAdjacentHTML('beforeend', '<div id="two">two</div>');
-
-
-			// var spaceInner = document.getElementById('#space');
-			// spaceInner.insertAdjacentHTML('beforeend', val + "</br></br>");
-				if (val != null && val != "") {
-					if (dialogueCounter == 0) {
-						var enhancedResponse = setEnhancedResponse(val);
-						var spaceInner = document.getElementById('space');
-						var innerResponse = "Catherine: " + val + enhancedResponse + "</br></br>"
-						spaceInner.insertAdjacentHTML('beforeend', innerResponse);
-						dialogueCounter = 1;
-					} else {
-						var enhancedResponse = setEnhancedResponse(val);
-						if (enhancedResponse != undefined) {
-							var innerResponse = "<b>You: </b>" + userResponse + "</br></br><b>Catherine: </b>" + val + enhancedResponse;
-							disableInput();
-						} else {
-							var innerResponse = "<b>You: </b>" + userResponse + "</br></br><b>Catherine: </b>" + val;
-							enableInput();
-						}
-						var spaceInner = document.getElementById('space');
-						var innerResponse = "Catherine: " + val + enhancedResponse + "</br></br>"
-						spaceInner.insertAdjacentHTML('beforeend', innerResponse);
-					}
+			var enhancedResponse = setEnhancedResponse(val);
+			var innerResponse = "";
+			if (val != "") {
+				if (enhancedResponse != null) {
+					innerResponse = "Catherine: " + val + enhancedResponse + "</br></br>"
+					disableInput();
+				} else {
+					innerResponse = "Catherine: " + val + "</br></br>"
+					enableInput();
 				}
-				var scrolling = document.getElementById("space");
-				scrolling.scrollTop = scrolling.scrollHeight;
-				return;
+			}
+			var spaceInner = document.getElementById('space');
+			spaceInner.insertAdjacentHTML('beforeend', innerResponse);
+			spaceInner.scrollTop = spaceInner.scrollHeight;
+			return;
 		}
 
 		/**Sets input box to read only to prevent user from entering text.*/

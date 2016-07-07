@@ -2,10 +2,13 @@
 <head>
 	<title>Catherine's Pizza Delivery</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+	<meta charset="utf-8">
   <link rel="stylesheet" type="text/css" href="pizza.css">
 	<link href='https://fonts.googleapis.com/css?family=Questrial|Fjalla+One|Arimo|Josefin+Sans' rel='stylesheet' type='text/css'>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpMttyZ83MmTSnANmU8cwrfqijfkXSG3Y&libraries=places&callback=" async defer></script>
 	<script type="text/javascript">
 		var toGoogleTravelTime = false;
 		var hardOrderNums = [];
@@ -43,6 +46,7 @@
 				}));
 				/**Carousel event handler goes here.*/
 				loadCarousel();
+				initAutocomplete()
 			});
 
 		});
@@ -121,6 +125,29 @@
 			});
 		}
 		/**Function that loads carousel.*/
+		/**Google address search box.*/
+		function initAutocomplete() {
+			$("body").on('click', '#pac-input', function(event) {
+				var input = document.getElementById('pac-input');
+				var searchBox = new google.maps.places.SearchBox(input);
+				searchBox.addListener('places_changed', function() {
+					var places = searchBox.getPlaces();
+					if (places.length == 0) {
+							return;
+						}
+					});
+					$("#pac-input").keypress(function(event) {
+						if (event.which == 13) {
+							send($('#pac-input').val());
+							$(this).val("");
+						}
+					});
+			});
+		}
+
+
+
+
 		function loadCarousel() {
 			$("body").on('click', "#left", function(event) {
 				$("#carousel ul").animate({marginLeft:-480},"slow, 1000",function(){
@@ -218,7 +245,8 @@
 			if (botResponse.includes("Very well. Would you like your pizza baked normally or extra baked?")) {
 				return "<span></br><button class = 'button' id='normally_baked_button' value = 'Normally baked.'>Normally Baked</button><button class = 'button' id='extra_baked_button' value = 'Extra Baked'>Extra Baked</button></span>";
 			}
-			if (botResponse.includes("Please review your order: ")) {
+			if (botResponse.includes("Where should I deliver it to?")) {
+				return "<input id='pac-input' class='controls' type='text' placeholder='Search Box'>"
 			}
 
 			// if (botResponse.includes("Where should I deliver it to?")) {
@@ -243,7 +271,6 @@
 					$('#phone_p3').focus();
 				}
 		}
-
 
 
 	</script>

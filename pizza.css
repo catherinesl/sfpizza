@@ -74,6 +74,11 @@ text-align:center;
 
 #input {
     width: 100%;
+    padding: 1px;
+}
+
+#input: hover {
+  cursor:text;
 }
 
 
@@ -81,8 +86,9 @@ text-align:center;
     background-color: white;
     height: 90%;
     text-align:left;
-    overflow: scroll;
-    /*padding:20px;*/
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding: 10px;
 }
 
 .textarea, input{
@@ -99,7 +105,7 @@ text-align:center;
     font-size: 12px;
     right: 30px;
     position: absolute;
-    bottom: 45px;
+    bottom: 25px;
 }
 
 .button {
@@ -161,7 +167,7 @@ p {
 
 .car_nav#right {
 	display: inline;
-	margin-left: calc(100% - 30px);
+	margin-left: calc(100% - 32px);
 }
 
 
@@ -169,12 +175,29 @@ p {
     display: inline;
 }
 
-#nav_container {position: relative;bottom: 90px;z-index: 3;}
+.car_nav {
+  position: relative;
+  bottom: 90px;
+  
+
+}
+
+
+
+.car_nav:hover {
+  cursor:pointer;
+}
 
 img {
     margin-top: 30px;
     margin-right: 130px;
+
 }
+
+img:hover {
+  cursor:pointer;
+}
+
 
 .topping {
 	position: absolute;

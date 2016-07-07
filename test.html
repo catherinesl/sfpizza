@@ -49,42 +49,8 @@ img {
 
 </head>
 <body>
-<div id = "carousel">
-  <ul>
-    <li ><img src="assets/pepperoni.jpg" width="380px"><div class = "topping"></div></img></li>
-    <li><img src="assets/cheese.jpg" width="380px"><div class = "topping"></div></img></li>
-    <li><img src="assets/hawaiian.jpg" width="330px"><div class = "topping"></div></img></li>
-    <li><img src="assets/vegetarian.jpg" width="380px"><div class = "topping">Pepperoni</div></img></li>
-  </ul>
-</div>
-<div id = "nav_container">
-<div class = "car_nav" id = "left">&#9664;</div>
-<div class = "car_nav" id = "right">&#9654;</div>
-</div>
-  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-  <script type="text/javascript">
-  $(document).ready(function(){
-    $("#left").click(function(event) {
-  		$("#carousel ul").animate({marginLeft:-480},"slow, 1000",function(){
-  			$(this).find("li:last").after($(this).find("li:first"));
-  			$(this).css({marginLeft:0});
-  		});
-	   });
-     $("#right").click(function(event) {
+<span><input id="phone_p1"></input>-<input id="phone_p2"></input>-<input id="phone_p3"></input></span>
 
-   		$("#carousel ul").animate({marginLeft:480},"slow, 1000", function(){
-   			$(this).find("li:first").after($(this).find("li:last"));
-        $(this).find("li:last").after($(this).find("li:first"));
-        $(this).find("li:first").after($(this).find("li:last"));
-   			$(this).css({marginLeft:0});
-   		});
- 	   });
-
-
-
-
-
-  });
   </script>
 </div>
 </body>

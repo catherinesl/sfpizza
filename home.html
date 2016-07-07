@@ -17,6 +17,7 @@
 		$(document).ready(function() {
 			setResponse(previousResponse);
 			setEnhancedResponse(previousResponse);
+			disableInput();
 			$("#input").keypress(function(event) {
 				if (event.which == 13) {
 					event.preventDefault();
@@ -31,34 +32,41 @@
 			/**Changes bot service based on user's initial selection of service. */
 			$(window).load(function() {
 				$("body").on('click', ".button", (function(event){
-					// event.preventDefault();
-					console.log("button is clicked!");
+					event.preventDefault();
+					console.log("button is", $(this).attr('value'));
 					var selection = $(this).attr('value');
-					if (selection == "Edit order") {
+					console.log("selection is:", selection);
+					if (selection == "Edit Order") {
 						accessToken = "def5c7f6f5f0410e90412f10fafb0e00";
 					}
 					send(selection);
 					return;
 				}));
-				$("body").on('click', "#left", function(event) {
-									 console.log("suh duh left");
-					$("#carousel ul").animate({marginLeft:-480},"slow, 1000",function(){
-						$(this).find("li:last").after($(this).find("li:first"));
-						$(this).css({marginLeft:0});
-					});
-				 });
-				 $("#right").click(function(event) {
-					 console.log("suh duh right");
-					$("#carousel ul").animate({marginLeft:480},"slow, 1000", function(){
-						$(this).find("li:first").after($(this).find("li:last"));
-						$(this).find("li:last").after($(this).find("li:first"));
-						$(this).find("li:first").after($(this).find("li:last"));
-						$(this).css({marginLeft:0});
-					});
-				 });
-				 $("#nav_container").click(function(event){
-					 console.log("clicked nav_container");
-				 })
+				/**Carousel event handler goes here.*/
+				loadCarousel();
+				// $("body").on('click', "#left", function(event) {
+				// 					 console.log("suh duh left");
+				// 	$("#carousel ul").animate({marginLeft:-480},"slow, 1000",function(){
+				// 		$(this).find("li:last").after($(this).find("li:first"));
+				// 		$(this).css({marginLeft:0});
+				// 	});
+				//  });
+				//  $("body").on('click', '#right', function(event) {
+				// 	 console.log("suh duh right");
+				// 	$("#carousel ul").animate({marginLeft:480},"slow, 1000", function(){
+				// 		$(this).find("li:first").after($(this).find("li:last"));
+				// 		$(this).find("li:last").after($(this).find("li:first"));
+				// 		$(this).find("li:first").after($(this).find("li:last"));
+				// 		$(this).css({marginLeft:0});
+				// 	});
+				//  });
+				//  $("body").on('click', "img", (function(event){
+ 			// 		// event.preventDefault();
+				// 	var selection = $(this).attr('value');
+ 			// 		console.log("img is clicked!");
+ 			// 		send(selection);
+ 			// 		return;
+ 			// 	}));
 			});
 
 		});
@@ -105,6 +113,7 @@
 			$("#rec").text(recognition ? "Stop" : "Speak");
 		}
 		function send(userAction) {
+			console.log("in send, userAction is: ", userAction);
 			if (userAction == null) {
 					var text = $("#input").val();
 			} else {
@@ -134,9 +143,29 @@
 					setResponse("Our system is currently down right now, sorry abou that! Please come back later.");
 				}
 			});
-			// setResponse("Loading...");
 		}
-
+		/**Function that loads carousel.*/
+		function loadCarousel() {
+			$("body").on('click', "#left", function(event) {
+				$("#carousel ul").animate({marginLeft:-480},"slow, 1000",function(){
+					$(this).find("li:last").after($(this).find("li:first"));
+					$(this).css({marginLeft:0});
+				});
+			 });
+			 $("body").on('click', '#right', function(event) {
+				$("#carousel ul").animate({marginLeft:480},"slow, 1000", function(){
+					$(this).find("li:first").after($(this).find("li:last"));
+					$(this).find("li:last").after($(this).find("li:first"));
+					$(this).find("li:first").after($(this).find("li:last"));
+					$(this).css({marginLeft:0});
+				});
+			 });
+			 $("body").on('click', "img", (function(event){
+				var selection = $(this).attr('value');
+				send(selection);
+				return;
+				}));
+		}
 		/** Normal text responses formatted here. */
 		function setResponse(val, userResponse) {
 				if (dialogueCounter == 0 && val != null && val != "") {
@@ -147,9 +176,14 @@
 					dialogueCounter = 1;
 				}
 				else if (val != null && val != "") {
-					// console.log("val is: ", val);
 					var enNum = setEnhancedResponse(val);
-					var newHtml = outputString + "<b>You: </b>" + userResponse + "</br></br><b>Catherine: </b>" + val + enNum;
+					if (enNum != undefined) {
+						var newHtml = outputString + "<b>You: </b>" + userResponse + "</br></br><b>Catherine: </b>" + val + enNum;
+						disableInput();
+					} else {
+						var newHtml = outputString + "<b>You: </b>" + userResponse + "</br></br><b>Catherine: </b>" + val;
+						enableInput();
+					}
 					$("#space").html(newHtml);
 					outputString = newHtml + "</br></br>";
 				}
@@ -158,40 +192,49 @@
 				return;
 		}
 
+		/**Sets input box to read only to prevent user from entering text.*/
+		function disableInput() {
+			$('#input').attr('readonly', true);
+			$('#input').css('background-color', 'rgba(211, 211, 211, 100)');
+			$('#input').css('border-color', 'rgba(211, 211, 211, 0)');
+		}
+
+		/**Enables input box.*/
+		function enableInput() {
+			$('#input').attr('readonly', false);
+			$('#input').css('background-color', '#ffffff');
+			$('#input').css('border-color', 'initial');
+		}
+
 		/** Customzied responses processed here. */
 		function setEnhancedResponse(botResponse) {
-			// var enhancedNumber = enhancedChecker(botResponse);
 			switch(botResponse) {
 				case "Hello there! How may I help you today? I can help you do the following things:":
-					return "<span></br><button class = 'button' value = 'Place Order'>Place Order</button><button class = 'button' value = 'Edit Order'>Edit Order</button><button class = 'button' value='cancel Order'>Cancel Order</button></span>";
+					return "<span></br><button class = 'button' id='place_order_button' value = 'Place Order'>Place Order</button><button class = 'button' id='edit_order_button' value = 'Edit Order'>Edit Order</button><button class = 'button' id='cancel_order_button' value='cancel Order'>Cancel Order</button></span>";
 				case "Very well! We offer the following kinds of toppings: pepperoni, cheese, Hawaiian, and vegetarian. What would you like?":
-				// console.log("in second case");
 					return "<div id = 'carousel'>" +
 					  "<ul>"+
-					    "<li ><img src='assets/pepperoni.jpg' width='300px'><div class = 'topping'></div></img></li><li><img src='assets/cheese.jpg' width='380px'><div class = 'topping'></div></img></li><li><img src='assets/hawaiian.jpg' 'width=330px'><div class = 'topping'></div></img></li><li><img src='assets/vegetarian.jpg' width='380px'><div class = 'topping'></div></img></li>" +
+					    "<li ><img src='assets/pepperoni.jpg' width='300px' value='Pepperoni pizza.'><div class = 'topping'></div></img></li><li><img src='assets/cheese.jpg' width='300px' value='Cheese pizza.'><div class = 'topping'></div></img></li><li><img src='assets/hawaiian.jpg' 'width=300px' value='Hawaiian pizza.'><div class = 'topping'></div></img></li><li><img src='assets/vegetarian.jpg' width='300px' value='Vegetarian pizza.'><div class = 'topping'></div></img></li>" +
 					  "</ul>" +
 					"</div>" +
-					"<div id = 'nav_container'>" +
 					"<div class = 'car_nav' id = 'left'>&#9664;</div>"+
 					"<div class = 'car_nav' id = 'right'>&#9654;</div>"+
-					"</div>"+
 					"</div>";
-				case 3:
-					break;
-				case 4:
-					break;
-				default:
-					return 0;
+			}
+			if (botResponse.includes("Would you be interested in customizing your pizza?")) {
+				return "<span></br><button class = 'button' id='yes_button' value = 'Yes'>Yes</button><button class = 'button' id='no_button' value = 'No'>No</button></span>";
+			}
+			if (botResponse.includes("Would you like your crust thick or thin?")) {
+				return "<span></br><button class = 'button' id='thick_button' value = 'Thick'>Thick</button><button class = 'button' id='thin_button' value = 'Thin'>Thin</button></span>";
+			}
+			if (botResponse.includes("Would you like the pizza to be cut square or round?")) {
+				return "<span></br><button class = 'button' id='square_button' value = 'Square'>Square</button><button class = 'button' id='round_button' value = 'Round'>Round</button></span>";
+			}
+			if (botResponse.includes("Very well. Would you like your pizza baked normally or extra baked?")) {
+				return "<span></br><button class = 'button' id='normally_baked_button' value = 'Normally baked.'>Normally Baked</button><button class = 'button' id='extra_baked_button' value = 'Extra Baked'>Extra Baked</button></span>";
 			}
 		}
-		//
-		// /**Returns number back to setEnhancedResponse. */
-		// function enhancedChecker(botResponse) {
-		// 	switch(botResponse) {
-		// 		case
-		//
-		// 	}
-		// }
+
 
 	</script>
 </head>
@@ -206,13 +249,9 @@
 	  <div class = "option">Menu</div>
   </div>
 </br>
-
-  <!-- <div id = "intro">How may I help you today?</div> -->
-	<!-- <p>I would like to say: </p> -->
-
 	<div id = "apiinput">
 		<div id = "space"></div>
-    <input id="input" autocomplete="off" type="text"> <button id="rec">Send</button>
+    <input id="input" color="white" readonly="false" autocomplete="off" type="text"> <button id="rec">Send</button>
 	</div>
 
 </body>

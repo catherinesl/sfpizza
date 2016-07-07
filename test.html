@@ -1,56 +1,26 @@
 <head>
-<style>
-#carousel {
-		width: 480px;
-		overflow:hidden;
-	}
-
-	#carousel ul {
-		width: 1920px;
-		padding: 0;
-		margin: 0;
-	}
-
-	#carousel ul li {
-		width:480px;
-		text-align: center;
-		height: 280px;
-		list-style: none;
-		float:	left;
-	}
-
-.car_nav#right {
-	display: inline;margin-left: 320px;
-}
-
-
-.car_nav#left {
-    display: inline;
-}
-
-#nav_container {
-    height: 280px;
-    line-height: 280px;
-    position: absolute;
-    top: 0px;
-}
-
-img {
-    margin-right: 82px;
-    margin-top: 30px;
-}
-
-.topping {
-	position: absolute;
-	top: 8px;
-	left: 140px;
-}
-</style>
-
 </head>
 <body>
-<span><input id="phone_p1"></input>-<input id="phone_p2"></input>-<input id="phone_p3"></input></span>
+	<span><div id='enter_phone'><input id='phone_p1'></input>-<input id='phone_p2'></input>-<input id='phone_p3'></input></div></span>
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function(){
+		$('#phone_p1').on('keyup paste', p1ToP2());
 
+
+
+
+  });
+	function p1ToP2() {
+			if ($('#phone_p1').val().length > 3) {
+				$('#phone_p2').focus();
+			}
+	}
+
+	function p2ToP3() {
+			if ($('#phone_p2').val().length > 4) {
+				$('#phone_p3').focus();
+			}
+	}
   </script>
-</div>
 </body>

@@ -28,6 +28,8 @@
 			$("#rec").click(function(event) {
 				send();
 				$(this).val("");
+				p1ToP2();
+				p2ToP3();
 			});
 			/**Changes bot service based on user's initial selection of service. */
 			$(window).load(function() {
@@ -67,6 +69,7 @@
  			// 		send(selection);
  			// 		return;
  			// 	}));
+
 			});
 
 		});
@@ -233,7 +236,28 @@
 			if (botResponse.includes("Very well. Would you like your pizza baked normally or extra baked?")) {
 				return "<span></br><button class = 'button' id='normally_baked_button' value = 'Normally baked.'>Normally Baked</button><button class = 'button' id='extra_baked_button' value = 'Extra Baked'>Extra Baked</button></span>";
 			}
+			if (botResponse.includes("Very well. Would you like your pizza baked normally or extra baked?")) {
+				return "<span></br><button class = 'button' id='normally_baked_button' value = 'Normally baked.'>Normally Baked</button><button class = 'button' id='extra_baked_button' value = 'Extra Baked'>Extra Baked</button></span>";
+			}
+			if (botResponse.includes("Please enter your phone number to confirm.")) {
+				return "<span><input id='phone_p1'></input>-<input id='phone_p2'></input>-<input id='phone_p3'></input></span>";
+			}
 		}
+
+
+		/**Jumps cursor to the next input box.*/
+		function p1ToP2() {
+				if ($('#phone_p1').val().length > 3) {
+					$('#phone_p2').focus();
+				}
+		}
+
+		function p2ToP3() {
+				if ($('#phone_p2').val().length > 4) {
+					$('#phone_p3').focus();
+				}
+		}
+
 
 
 	</script>

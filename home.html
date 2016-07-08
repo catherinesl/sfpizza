@@ -8,7 +8,7 @@
 	<link href='https://fonts.googleapis.com/css?family=Questrial|Fjalla+One|Arimo|Josefin+Sans' rel='stylesheet' type='text/css'>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpMttyZ83MmTSnANmU8cwrfqijfkXSG3Y&libraries=places&callback="></script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAgmXTlf7UBYweIGhvUx-gB5Y1wuDJg4WY&libraries=places"></script>
 	<!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpMttyZ83MmTSnANmU8cwrfqijfkXSG3Y&callback=initMap"> This is the script source directly pasted from DistanceMatrixService. Causes error because of duplicate Google Maps script.-->
 	</script>
 	<script type="text/javascript">
@@ -132,7 +132,8 @@
 		/**Function that loads carousel.*/
 		/**Google address search box.*/
 		function initAutocomplete() {
-			$("body").on('click', '#pac-input', function(event) {
+			$("#pack-input").on('click', '#pac-input', function(event) {
+				console.log("is google's search tool working");
 				var input = document.getElementById('pac-input');
 				var searchBox = new google.maps.places.SearchBox(input);
 				searchBox.addListener('places_changed', function() {
@@ -146,7 +147,6 @@
 							destinationAddress = $('#pac-input').val();
 							send(destinationAddress);
 							calcTravelTime(destinationAddress);
-							console.log("travelTime is now: ", travelTime);
 							$(this).val("");
 						}
 					});

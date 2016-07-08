@@ -8,9 +8,14 @@
 	<link href='https://fonts.googleapis.com/css?family=Questrial|Fjalla+One|Arimo|Josefin+Sans' rel='stylesheet' type='text/css'>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpMttyZ83MmTSnANmU8cwrfqijfkXSG3Y&libraries=places&callback=" async defer></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpMttyZ83MmTSnANmU8cwrfqijfkXSG3Y&libraries=places&callback="></script>
+	<!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpMttyZ83MmTSnANmU8cwrfqijfkXSG3Y&callback=initMap"> This is the script source directly pasted from DistanceMatrixService. Causes error because of duplicate Google Maps script.-->
+	</script>
 	<script type="text/javascript">
-		var toGoogleTravelTime = false;
+		var destinationAddress = "";
+		var travelTime = "";
+		var preventOriginal = false;
+		var preventOriginalCount = 0;
 		var hardOrderNums = [];
 		const fallBackPossibilities = ["Please continue...", "Ahh, tell me more.", "Yes, indeed indeed.", "Come, elucidate your thoughts", "Sorry, I didn't quite understand that. Do you mind repeating yourself again?"];
 		var outputString = "";
@@ -120,7 +125,7 @@
 					}
 				},
 				error: function() {
-					setResponse("Our system is currently down right now, sorry abou that! Please come back later.");
+					setResponse("Our system is currently down right now, sorry about that! Please come back later.");
 				}
 			});
 		}
@@ -138,15 +143,15 @@
 					});
 					$("#pac-input").keypress(function(event) {
 						if (event.which == 13) {
-							send($('#pac-input').val());
+							destinationAddress = $('#pac-input').val();
+							send(destinationAddress);
+							calcTravelTime(destinationAddress);
+							console.log("travelTime is now: ", travelTime);
 							$(this).val("");
 						}
 					});
 			});
 		}
-
-
-
 
 		function loadCarousel() {
 			$("body").on('click', "#left", function(event) {
@@ -172,19 +177,30 @@
 		/** Normal text responses from Catherine formatted here. */
 		function setResponse(val, userResponse) {
 			var enhancedResponse = setEnhancedResponse(val, userResponse);
+			// console.log("testing last part...", val, preventOriginal);
 			var innerResponse = "";
+			if (preventOriginal && preventOriginalCount == 1) {
+				preventOriginalCount = 0;
+				preventOriginal = false;
+				return;
+			}
+			if (preventOriginal && preventOriginalCount == 0) {
+				preventOriginalCount += 1;
+			}
 			if (val != "") {
 				if (enhancedResponse != null) {
+					console.log("am i here?");
 					innerResponse = "<b>Catherine:</b> " + val + enhancedResponse + "</br></br>"
 					disableInput();
-				} else {
+				} else if (enhancedResponse == null) {
+					console.log("i guess i'm here");
 					innerResponse = "<b>Catherine:</b> " + val + "</br></br>"
 					enableInput();
 				}
+				var spaceInner = document.getElementById('space');
+				spaceInner.insertAdjacentHTML('beforeend', innerResponse);
+				spaceInner.scrollTop = spaceInner.scrollHeight;
 			}
-			var spaceInner = document.getElementById('space');
-			spaceInner.insertAdjacentHTML('beforeend', innerResponse);
-			spaceInner.scrollTop = spaceInner.scrollHeight;
 			return;
 		}
 
@@ -248,14 +264,14 @@
 			if (botResponse.includes("Where should I deliver it to?")) {
 				return "<input id='pac-input' class='controls' type='text' placeholder='Search Box'>"
 			}
-
-			// if (botResponse.includes("Where should I deliver it to?")) {
-			// 	toGoogleTravelTime = true;
-			// 	return
-			// }
-			// if (botResponse.includes("Please enter your phone number to confirm.")) {
-			// 	return "<span><input id='phone_p1'></input>-<input id='phone_p2'></input>-<input id='phone_p3'></input></span>";
-			// }
+			if (botResponse.includes("Where should I deliver it to?")) {
+				return "<input id='pac-input' class='controls' type='text' placeholder='Search Box'>"
+			}
+			if (botResponse.includes("Your order will arrive soon. Your total is 20 dollars. Please include a 15% delivery fee. Thank you for stopping by. Hope to see you another time.")) {
+				var newResponse = "Your order will arive in approximately " + travelTime + ". Your total is 20 dollars. Please include a 15% delivery fee. Thank you for stopping by. Hope to see you another time!"
+				preventOriginal = true;
+				setResponse(newResponse, "");
+			}
 		}
 
 
@@ -272,11 +288,36 @@
 				}
 		}
 
+		/**Calculates delivery time using Google Maps API.*/
+		function calcTravelTime(location) {
+			console.log("in calcTravelTime location is: ", location);
+			var bounds = new google.maps.LatLngBounds;
+			var origin1 = '156 2nd Street San Francisco, CA 94101';
+			var destinationA = location;
+			var service = new google.maps.DistanceMatrixService;
+
+			var results;
+			return service.getDistanceMatrix({
+				origins: [origin1],
+				destinations: [destinationA],
+				travelMode: google.maps.TravelMode.DRIVING,
+				unitSystem: google.maps.UnitSystem.METRIC,
+				avoidHighways: false,
+				avoidTolls: false
+			}, function(response, status) {
+				if (status !== google.maps.DistanceMatrixStatus.OK) {
+					alert('Error was: ' + status);
+				} else {
+					results = response.rows[0].elements;
+					travelTime = results[0].duration.text;
+				}
+			});
+		}
+
 
 	</script>
 </head>
 <body>
-
   <div id = "title"><h1>Catherine's Pizza Delivery</h1></div>
   <div id = "menu">
     <div class = "option">Contact Us</div>

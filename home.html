@@ -133,6 +133,7 @@
 		/**Google address search box.*/
 		function initAutocomplete() {
 			$("body").on('click', '#pac-input', function(event) {
+				console.log("searching address now");
 				var input = document.getElementById('pac-input');
 				var searchBox = new google.maps.places.SearchBox(input);
 				searchBox.addListener('places_changed', function() {
@@ -290,7 +291,6 @@
 
 		/**Calculates delivery time using Google Maps API.*/
 		function calcTravelTime(location) {
-			console.log("in calcTravelTime location is: ", location);
 			var bounds = new google.maps.LatLngBounds;
 			var origin1 = '156 2nd Street San Francisco, CA 94101';
 			var destinationA = location;

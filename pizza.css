@@ -8,16 +8,21 @@ text-align:center;
 
 #apiinput {
     background-color: black;
-    width: 25%;
+    width: 590px;
     height: 350px;
-    padding: 30px;
+    padding-top: 30px;
+    padding-bottom: 10px;
     position: absolute;
-    left: calc((100% - 25%)/2);
-    background: rgb(54, 25, 25); /* Fall-back for browsers that don't
+    left: calc((100% - 590px)/2);
+     /* Fall-back for browsers that don't
                                    support rgba */
-    background: rgba(0, 0, 0, 0.86);
+    border-style: solid;
     top: 250px;
-    /* transform: translate(0%, -50%); */
+    border-radius: 1.5px;
+    border-color: black;
+    border-bottom-style: solid;
+    z-index: 999;
+    border-width: 1px;
 }
 
 #title {
@@ -74,7 +79,13 @@ text-align:center;
 
 #input {
     width: 100%;
-    padding: 1px;
+    padding: 2px;
+    position: absolute;
+    left: 0px;
+    bottom: 4px;
+    height: 30;
+    font-size: 14px;
+    padding-left: 15px;
 }
 
 #input: hover {
@@ -85,10 +96,12 @@ text-align:center;
 #space {
     background-color: white;
     height: 90%;
-    text-align:left;
+    text-align: left;
     overflow-y: scroll;
     overflow-x: hidden;
-    padding: 10px;
+    padding-top: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 .textarea, input{
@@ -102,10 +115,15 @@ text-align:center;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 12px;
-    right: 30px;
     position: absolute;
-    bottom: 25px;
+    right: 0;
+    bottom: 4px;
+    padding-left: 15px;
+    padding-right: 15px;
+    height: 30px;
+    width: 80px;
+    font-size: 12px;
+    letter-spacing: 1px;
 }
 
 .button {
@@ -145,20 +163,20 @@ p {
 }
 
 #carousel {
-		width: 480px;
+		width: 590px;
 		overflow:hidden;
-		height: 180px;
+		height: 200px;
 		text-align: center;
 	}
 
 	#carousel ul {
-		width: 1920px;
+		width: 2360px;
 		padding: 0;
-		margin: 0;
+		margin-left: calc(57.5% - 50%);
 	}
 
 	#carousel ul li {
-		width:480px;
+		width:590px;
 		text-align: center;
 		height: 280px;
 		list-style: none;
@@ -246,5 +264,10 @@ img:hover {
       }
       #target {
         width: 345px;
+      }
+      .selection {
+        margin-left: calc((50% - 50%));
+        width: 100%;
+        text-align: center;
       }
 /******/

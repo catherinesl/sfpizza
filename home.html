@@ -45,6 +45,9 @@
 					var selection = $(this).attr('value');
 					if (selection == "Edit Order") {
 						accessToken = "def5c7f6f5f0410e90412f10fafb0e00";
+					} else if (selection == "I know what I want") {
+						setResponse("Got it. What would you like to order today?");
+						return;
 					}
 					send(selection);
 					return;
@@ -133,7 +136,6 @@
 		/**Google address search box.*/
 		function initAutocomplete() {
 			$("body").on('click', '#pac-input', function(event) {
-				console.log()
 				var input = document.getElementById('pac-input');
 				var searchBox = new google.maps.places.SearchBox(input);
 				searchBox.addListener('places_changed', function() {
@@ -191,7 +193,7 @@
 			if (val != "") {
 				if (enhancedResponse != null) {
 					console.log("am i here?");
-					innerResponse = "<b>Catherine:</b> " + val + enhancedResponse + "</br></br>"
+					innerResponse = "<b>Catherine:</b> " + val + enhancedResponse + "</br>"
 					disableInput();
 				} else if (enhancedResponse == null) {
 					console.log("i guess i'm here");
@@ -235,7 +237,7 @@
 		function setEnhancedResponse(botResponse, userResponse) {
 			switch(botResponse) {
 				case "Hello there! How may I help you today? I can help you do the following things:":
-					return "<span></br><button class = 'button' id='place_order_button' value = 'Place Order'>Place Order</button><button class = 'button' id='edit_order_button' value = 'Edit Order'>Edit Order</button><button class = 'button' id='cancel_order_button' value='cancel Order'>Cancel Order</button></span>";
+					return "<span></br></br><div class = 'selection'><button class = 'button' id='iknow_button' value='I know what I want'>I know what I want</button><button class = 'button' id='place_order_button' value = 'View menu.'>View Menu</button><button class = 'button' id='edit_order_button' value = 'Edit Order'>Edit Order</button><button class = 'button' id='cancel_order_button' value='cancel Order'>Cancel Order</button></div></span>";
 				case "Very well! We offer the following kinds of toppings: pepperoni, cheese, Hawaiian, and vegetarian. What would you like?":
 					return "<div id = 'carousel'>" +
 					  "<ul>"+
@@ -263,10 +265,7 @@
 				return "<span></br><button class = 'button' id='normally_baked_button' value = 'Normally baked.'>Normally Baked</button><button class = 'button' id='extra_baked_button' value = 'Extra Baked'>Extra Baked</button></span>";
 			}
 			if (botResponse.includes("Where should I deliver it to?")) {
-				return "<input id='pac-input' class='controls' type='text' placeholder='Search Box'>"
-			}
-			if (botResponse.includes("Where should I deliver it to?")) {
-				return "<input id='pac-input' class='controls' type='text' placeholder='Search Box'>"
+				return "</br><div class = 'selection'><input id='pac-input' class='controls' type='text' placeholder='Please enter your delivery address.'></div>"
 			}
 			if (botResponse.includes("Your order will arrive soon. Your total is 20 dollars. Please include a 15% delivery fee. Thank you for stopping by. Hope to see you another time.")) {
 				var newResponse = "Your order will arive in approximately " + travelTime + ". Your total is 20 dollars. Please include a 15% delivery fee. Thank you for stopping by. Hope to see you another time!"
@@ -275,19 +274,6 @@
 			}
 		}
 
-
-		/**Jumps cursor to the next input box.*/
-		function p1ToP2() {
-				if ($('#phone_p1').val().length > 3) {
-					$('#phone_p2').focus();
-				}
-		}
-
-		function p2ToP3() {
-				if ($('#phone_p2').val().length > 4) {
-					$('#phone_p3').focus();
-				}
-		}
 
 		/**Calculates delivery time using Google Maps API.*/
 		function calcTravelTime(location) {
@@ -328,6 +314,7 @@
   </div>
 </br>
 	<div id = "apiinput">
+		<div id = "chat_name" color="white"Pizza Bot></div>
 		<div id = "space"></div>
     <input id="input" color="white" readonly="false" autocomplete="off" type="text"> <button id="rec">Send</button>
 	</div>

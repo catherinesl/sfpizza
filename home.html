@@ -138,13 +138,13 @@
 			$("body").on('click', '#pac-input', function(event) {
 				var input = document.getElementById('pac-input');
 				var searchBox = new google.maps.places.SearchBox(input);
-				searchBox.addListener('places_changed', function() {
-					var places = searchBox.getPlaces();
-					if (places.length == 0) {
-							return;
-						}
-					});
 					$("#pac-input").keypress(function(event) {
+						searchBox.addListener('places_changed', function() {
+							// var places = searchBox.getPlaces();
+							if (places.length == 0) {
+									return;
+								}
+							});
 						if (event.which == 13) {
 							destinationAddress = $('#pac-input').val();
 							send(destinationAddress);
@@ -152,6 +152,7 @@
 							console.log("travelTime is now: ", travelTime);
 							$(this).val("");
 						}
+
 					});
 			});
 		}

@@ -8,8 +8,6 @@
 	<link href='https://fonts.googleapis.com/css?family=Questrial|Fjalla+One|Arimo|Josefin+Sans' rel='stylesheet' type='text/css'>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-	<script src="https://js.braintreegateway.com/js/braintree-2.26.0.min.js"></script>
-
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpMttyZ83MmTSnANmU8cwrfqijfkXSG3Y&libraries=places&callback="></script>
 	<!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpMttyZ83MmTSnANmU8cwrfqijfkXSG3Y&callback=initMap"> -->
 	<!-- </script> -->
@@ -135,7 +133,7 @@
 		/**Google address search box.*/
 		function initAutocomplete() {
 			$("body").on('click', '#pac-input', function(event) {
-				console.log("searching address now");
+				console.log()
 				var input = document.getElementById('pac-input');
 				var searchBox = new google.maps.places.SearchBox(input);
 				searchBox.addListener('places_changed', function() {

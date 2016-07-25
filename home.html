@@ -102,7 +102,9 @@
 		}
 		function send(userAction) {
 			if (userAction == null) {
-					var text = $("#input").val();
+				if ($("#input").val() != null) {
+						var text = $("#input").val();
+				}
 			} else {
 				var text = userAction;
 			}
@@ -124,11 +126,10 @@
 						previousResponse = data.result.speech;
 						normalResponse = data.result.speech;
 						window.setTimeout(setResponse(normalResponse, text),1000);
-						// setEnhancedResponse(normalResponse);
 					}
 				},
-				error: function() {
-					setResponse("Our system is currently down right now, sorry about that! Please come back later.");
+				error: function(userAction) {
+					// setResponse("Our system is currently down right now, sorry about that! Please come back later.");
 				}
 			});
 		}

@@ -167,12 +167,13 @@ p {
 		overflow:hidden;
 		height: 200px;
 		text-align: center;
+		margin-left: calc(57.5% - 50%);
 	}
 
 	#carousel ul {
 		width: 2360px;
 		padding: 0;
-		margin-left: calc(57.5% - 50%);
+
 	}
 
 	#carousel ul li {

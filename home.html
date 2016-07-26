@@ -24,9 +24,11 @@
 		var accessToken = "3345970f25e64eaf9657ba5494ce0595";
 		var baseUrl = "https://api.api.ai/v1/";
 		$(document).ready(function() {
+			//Sets default greeting message and buttons
 			setResponse(previousResponse);
 			setEnhancedResponse(previousResponse);
 			disableInput();
+			//Sends and clears input when user presses enter key
 			$("#input").keypress(function(event) {
 				if (event.which == 13) {
 					event.preventDefault();
@@ -34,25 +36,31 @@
 					$(this).val("");
 				}
 			});
+			//Sends and clears input when user preses send button
 			$("#rec").click(function(event) {
 				send();
 				$(this).val("");
 			});
-			/**Changes bot service based on user's initial selection of service. */
+			/**Changes bot service based on user's initial selection of service.
+			Dynamic event handlers go here.*/
 			$(window).load(function() {
 				$("body").on('click', ".button", (function(event){
 					event.preventDefault();
 					var selection = $(this).attr('value');
+					//If user clicks edit order, change the bot token to another agent.
 					if (selection == "Edit Order") {
 						accessToken = "def5c7f6f5f0410e90412f10fafb0e00";
 					} else if (selection == "I know what I want") {
+						//If user knows what he/she wants, activate freestyle mode
+						//where users can directly type in something like
+						// 'I want a pepperoni pizza with extra cheese'. Bot should
+						// comprehend
 						setResponse("Got it. What would you like to order today?");
 						return;
 					}
 					send(selection);
 					return;
 				}));
-				/**Carousel event handler goes here.*/
 				loadCarousel();
 				initAutocomplete()
 			});
@@ -133,7 +141,6 @@
 				}
 			});
 		}
-		/**Function that loads carousel.*/
 		/**Google address search box.*/
 		function initAutocomplete() {
 			$("body").on('click', '#pac-input', function(event) {
@@ -158,7 +165,7 @@
 					});
 			});
 		}
-
+		/**Loads carousel for pizza menu.*/
 		function loadCarousel() {
 			$("body").on('click', "#left", function(event) {
 				$("#carousel ul").animate({marginLeft:-480},"slow, 1000",function(){
@@ -180,10 +187,15 @@
 				return;
 				}));
 		}
-		/** Normal text responses from Catherine formatted here. */
+
+
+		/** Normal text responses from Catherine bot formatted here. PreventOriginal is
+		a boolean that prevents API.ai's reponse to be sent out. Sends out a curated
+		response from the code here. First if statement returns before setting the
+		response so that an enhancedResponse can be displayed directly (for
+		certain cases, setEnhancedResponse calls on setResponse).*/
 		function setResponse(val, userResponse) {
 			var enhancedResponse = setEnhancedResponse(val, userResponse);
-			// console.log("testing last part...", val, preventOriginal);
 			var innerResponse = "";
 			if (preventOriginal && preventOriginalCount == 1) {
 				preventOriginalCount = 0;
@@ -195,11 +207,9 @@
 			}
 			if (val != "") {
 				if (enhancedResponse != null) {
-					console.log("am i here?");
 					innerResponse = "<b>Catherine:</b> " + val + enhancedResponse + "</br>"
 					disableInput();
 				} else if (enhancedResponse == null) {
-					console.log("i guess i'm here");
 					innerResponse = "<b>Catherine:</b> " + val + "</br></br>"
 					enableInput();
 				}
@@ -236,7 +246,8 @@
 			$('#input').css('border-color', 'initial');
 		}
 
-		/** Customzied responses processed here. */
+		/** Customzied responses processed here. Function returns dynamic HTML, which
+		is done by checking for exact string or substrings from API.ai's response.*/
 		function setEnhancedResponse(botResponse, userResponse) {
 			switch(botResponse) {
 				case "Hello there! How may I help you today? I can help you do the following things:":
@@ -278,7 +289,8 @@
 		}
 
 
-		/**Calculates delivery time using Google Maps API.*/
+		/**Calculates delivery time using Google Maps Distance Matrix API.
+		Takes in a location as a destination and uses Solution Fuse WeWork as default.*/
 		function calcTravelTime(location) {
 			var bounds = new google.maps.LatLngBounds;
 			var origin1 = '156 2nd Street San Francisco, CA 94101';
@@ -307,6 +319,8 @@
 	</script>
 </head>
 <body>
+	<!-- Menu tabs here. Tabs are for display purposes and server no
+functionality.-->
   <div id = "title"><h1>Catherine's Pizza Delivery</h1></div>
   <div id = "menu">
     <div class = "option">Contact Us</div>
@@ -316,11 +330,11 @@
 	  <div class = "option">Menu</div>
   </div>
 </br>
+<!-- Skeleton for chat window. All outputs are displayed in "space." -->
 	<div id = "apiinput">
 		<div id = "chat_name" color="white"Pizza Bot></div>
 		<div id = "space"></div>
-    <input id="input" color="white" readonly="false" autocomplete="off" type="text"> <button id="rec">Send</button>
+    <input id="input" color="white" readonly="false" autocomplete="off" type="text"><button id="rec">Send</button>
 	</div>
-
 </body>
 </html>

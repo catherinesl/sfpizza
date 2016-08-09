@@ -1,17 +1,25 @@
+<!DOCTYPE html>
 <html>
 <head>
 	<title>Catherine's Pizza Delivery</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta charset="utf-8">
   <link rel="stylesheet" type="text/css" href="pizza.css">
-	<link href='https://fonts.googleapis.com/css?family=Questrial|Fjalla+One|Arimo|Josefin+Sans' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Anton|Nunito:300' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Anton|Josefin+Sans' rel='stylesheet' type='text/css'>
+	<link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDXjhDA-4Sjs0mOcrgbm5C8NQMAii0B8U&libraries=places&callback="></script>
+	<script type="text/javascript" src="assets/javascript/smoothscroll.js"></script>
+	<!-- <script type="text/javascript" src="assets/javascript/countUp.js"></script> -->
+	<script type="text/javascript" src="assets/javascript/jquery.countTo.js"></script>
+
 	<!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpMttyZ83MmTSnANmU8cwrfqijfkXSG3Y&callback=initMap"> -->
 	<!-- </script> -->
 	<script type="text/javascript">
+		var longNav = false;
 		var destinationAddress = "";
 		var travelTime = "";
 		var preventOriginal = false;
@@ -23,7 +31,29 @@
 		var previousResponse = "Hello there! How may I help you today? I can help you do the following things:";
 		var accessToken = "3345970f25e64eaf9657ba5494ce0595";
 		var baseUrl = "https://api.api.ai/v1/";
+
 		$(document).ready(function() {
+
+
+
+//Use scrollToFixed
+
+				$('#scrollContainer').scroll(function() {
+						var top = $('#scrollContainer').scrollTop();
+						if (top >= 160) {
+							$('#menu').css('top', top + "px");
+							$('#menu').css('width', "100%");
+							longNav = true;
+						} else if (top <= 160 ){
+								$('#menu').css('top', 160 + "px");
+								$('#menu').css('width', "83.33%");
+								$('#menu').css('margin-left', "auto");
+								$('#menu').css('margin-right', "auto");
+								$('#menu').css('left', "0");
+								$('#menu').css('right', "0");
+						}
+				});
+
 			//Sets default greeting message and buttons
 			setResponse(previousResponse);
 			setEnhancedResponse(previousResponse);
@@ -207,10 +237,10 @@
 			}
 			if (val != "") {
 				if (enhancedResponse != null) {
-					innerResponse = "<b>Catherine:</b> " + val + enhancedResponse + "</br>"
+					innerResponse = "<div class='bot_response'><b>Catherine:</b> " + val + enhancedResponse + "</div>"
 					disableInput();
 				} else if (enhancedResponse == null) {
-					innerResponse = "<b>Catherine:</b> " + val + "</br></br>"
+					innerResponse = "<div class='bot_response'><b>Catherine:</b> " + val + "</div>"
 					enableInput();
 				}
 				var spaceInner = document.getElementById('space');
@@ -224,7 +254,7 @@
 		function setUserResponse(userResponse) {
 			var innerResponse = "";
 			if (userResponse != "") {
-				innerResponse = "<b>You:</b> " + userResponse + "</br></br>"
+				innerResponse = "<div class='your_response'><b>You:</b> " + userResponse + "</div>"
 			}
 			var spaceInner = document.getElementById('space');
 			spaceInner.insertAdjacentHTML('beforeend', innerResponse);
@@ -251,7 +281,7 @@
 		function setEnhancedResponse(botResponse, userResponse) {
 			switch(botResponse) {
 				case "Hello there! How may I help you today? I can help you do the following things:":
-					return "<span></br></br><div class = 'selection'><button class = 'button' id='iknow_button' value='I know what I want'>I know what I want</button><button class = 'button' id='place_order_button' value = 'View menu.'>View Menu</button><button class = 'button' id='edit_order_button' value = 'Edit Order'>Edit Order</button><button class = 'button' id='cancel_order_button' value='cancel Order'>Cancel Order</button></div></span>";
+					return "<span></br></br><div class = 'selection'><button class = 'button pulse' id='iknow_button' value='I know what I want'>I know what I want</button><button class = 'button pulse' id='place_order_button' value = 'View menu.'>View Menu</button><button class = 'button pulse' id='edit_order_button' value = 'Edit Order'>Edit Order</button><button class = 'button pulse' id='cancel_order_button' value='cancel Order'>Cancel Order</button></div></span>";
 				case "Very well! We offer the following kinds of toppings: pepperoni, cheese, Hawaiian, and vegetarian. What would you like?":
 					return "<div id = 'carousel'>" +
 					  "<ul>"+
@@ -264,19 +294,19 @@
 			}
 
 			if (botResponse.includes("Would you be interested in customizing your pizza?")) {
-				return "<span></br><button class = 'button' id='yes_button' value = 'Yes'>Yes</button><button class = 'button' id='no_button' value = 'No'>No</button></span>";
+				return "<span></br><button class = 'button pulse' id='yes_button' value = 'Yes'>Yes</button><button class = 'button pulse' id='no_button' value = 'No'>No</button></span>";
 			}
 			if (botResponse.includes("Would you like your crust thick or thin?")) {
-				return "<span></br><button class = 'button' id='thick_button' value = 'Thick'>Thick</button><button class = 'button' id='thin_button' value = 'Thin'>Thin</button></span>";
+				return "<span></br><button class = 'button pulse' id='thick_button' value = 'Thick'>Thick</button><button class = 'button pulse' id='thin_button' value = 'Thin'>Thin</button></span>";
 			}
 			if (botResponse.includes("Would you like the pizza to be cut square or round?")) {
-				return "<span></br><button class = 'button' id='square_button' value = 'Square'>Square</button><button class = 'button' id='round_button' value = 'Round'>Round</button></span>";
+				return "<span></br><button class = 'button pulse' id='square_button' value = 'Square'>Square</button><button class = 'button pulse' id='round_button' value = 'Round'>Round</button></span>";
 			}
 			if (botResponse.includes("Very well. Would you like your pizza baked normally or extra baked?")) {
-				return "<span></br><button class = 'button' id='normally_baked_button' value = 'Normally baked.'>Normally Baked</button><button class = 'button' id='extra_baked_button' value = 'Extra Baked'>Extra Baked</button></span>";
+				return "<span></br><button class = 'button pulse' id='normally_baked_button' value = 'Normally baked.'>Normally Baked</button><button class = 'button pulse' id='extra_baked_button' value = 'Extra Baked'>Extra Baked</button></span>";
 			}
 			if (botResponse.includes("Very well. Would you like your pizza baked normally or extra baked?")) {
-				return "<span></br><button class = 'button' id='normally_baked_button' value = 'Normally baked.'>Normally Baked</button><button class = 'button' id='extra_baked_button' value = 'Extra Baked'>Extra Baked</button></span>";
+				return "<span></br><button class = 'button pulse' id='normally_baked_button' value = 'Normally baked.'>Normally Baked</button><button class = 'button pulse' id='extra_baked_button' value = 'Extra Baked'>Extra Baked</button></span>";
 			}
 			if (botResponse.includes("Where should I deliver it to?")) {
 				return "</br><div class = 'selection'><input id='pac-input' class='controls' type='text' placeholder='Please enter your delivery address.'></div>"
@@ -321,20 +351,110 @@
 <body>
 	<!-- Menu tabs here. Tabs are for display purposes and server no
 functionality.-->
-  <div id = "title"><h1>Catherine's Pizza Delivery</h1></div>
-  <div id = "menu">
-    <div class = "option">Contact Us</div>
-    <div class = "option" id = "chat_tab">Chat Bot Service</div>
-    <div class = "option">Reviews</div>
-    <div class = "option">Make a Reservation</div>
-	  <div class = "option">Menu</div>
-  </div>
-</br>
-<!-- Skeleton for chat window. All outputs are displayed in "space." -->
-	<div id = "apiinput">
-		<div id = "chat_name" color="white"Pizza Bot></div>
-		<div id = "space"></div>
-    <input id="input" color="white" readonly="false" autocomplete="off" type="text"><button id="rec">Send</button>
+
+<div id="scrollContainer">
+		<div id="title">
+			<!-- Menu -->
+		<div class = "row">
+
+				<div id = "menu" class="col-12 men-sec">
+					<div id="menu_inside">
+						<div class = "option"><a class = "option" id = "chat_tab" data-scroll href="#title">HOME</a></div>
+						<div class = "option"><a class = "option" data-scroll href="#grid_section_title">HOW IT WORKS</a></div>
+						<div class = "option"><a class = "option" data-scroll href="#chat_container">CHAT BOT</a></div>
+						<div class = "option"><a class = "option" data-scroll href="#contact-section">CONTACT US</a></div>
+					</div>
+				</div>
+
+		</div>
+
+
+		<!-- <div id="fast_easy">Pizza ordering done intelligently.</div> -->
+		<!-- Countdown -->
+		<div class="row countdown-row">
+			<div id = "name"><img src='assets/logo.png' width="40px"/>Solution Fuse Pizza Bot</div>
+			<div class="col-2 countdown-col"></div>
+				<div id="countdown_container" class="col-8 countdown-col">
+				<div id="countdown-text"><span class="timer"></span>pizzas ordered since you arrived.</div>
+				<!-- Order Button -->
+				<div id = "direction_icon"><a class = "option" data-scroll href="#chat_section_title" id="bottom_button"><strong>ORDER YOURS NOW</strong></a></div>
+			</div>
+			<div class="col-2 countdown-col"></div>
+		</div>
+
+		</div>
+		<!-- Grid Title -->
+		<div id="grid_section_title">how it works</div>
+		<!-- Grid thing -->
+		<div id = "how_it_works" class="row">
+			<div class="col-1 title-blocks"></div>
+			<div id="sub" class="col-10">
+				<div class="steps" id="first">
+					<div class="description"><div class="num">1</div><div class="text">Morbi pharetra ipsum eu libero malesuada ultrices.</div></div>
+				</div>
+				<div class="steps" id="second">
+					<div class="description"><div class="num">2</div><div class="text">Sed aliquam ipsum sit amet lectus elementum, quis tincidunt magna scelerisque.</div></div>
+				</div>
+				<div class="steps" id="third">
+					<div class="description"><div class="num">3</div><div class="text">Morbi luctus diam id fermentum bibendum.</div></div>
+				</div>
+			</div>
+			<div class="col-1 title-blocks"></div>
+		</div>
+		<!-- Chat Box -->
+		<div id="chat_container">
+			<div id="chat_section_title" class="section_title">chat bot</div>
+		<div class="row chat_bot">
+			<div class="col-3 mid-sec">
+			</div>
+			<div class="col-6 mid-sec">
+				<div id = "apiinput">
+					<div id = "chat_name" color="white"Pizza Bot></div>
+					<div id = "space"></div>
+				</div>
+			</div>
+			<div class="col-3 mid-sec">
+			</div>
+		</div>
+	<!-- input and send button here -->
+		<div class="row input_section">
+			<div class="col-3 bottom-sec">
+			</div>
+			<div class="col-6 bottom-sec">
+				<!-- <input id="input" color="white" readonly="false" autocomplete="off" type="text"> -->
+				<textarea id="input"rows="4" cols="50" color="white" readonly="false" autocomplete="off" type="text"></textarea>
+			</div>
+			<!-- <div class="col-0-5 bottom-sec">
+				<button id="rec">Send</button>
+			</div> -->
+			<div class="col-3 bottom-sec">
+			</div>
+		</div>
 	</div>
+	<!-- Contact Us -->
+	<div id="contact-section">
+		<div class="row">
+			<div id ="contact_text">Contact Us</div>
+		</div>
+	</div>
+</div>
 </body>
 </html>
+<script>
+    smoothScroll.init();
+		$('.timer').countTo({
+    from: 2,
+    to: 500,
+    speed: 500000,
+    refreshInterval: 1000,
+    formatter: function (value, options) {
+      return value.toFixed(options.decimals);
+    },
+    onUpdate: function (value) {
+      console.debug(this);
+    },
+    onComplete: function (value) {
+      console.debug(this);
+    }
+  });
+</script>

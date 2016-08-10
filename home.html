@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Catherine's Pizza Delivery</title>
+	<title>Solution Fuse Pizza Delivery</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta charset="utf-8">
@@ -158,7 +158,7 @@
 				data: JSON.stringify({ q: text, lang: "en" }),
 				success: function(data) {
 					if (data.result.speech == null || data.result.speech == "") {
-						fallbackResponse = "</br>" + fallBackPossibilities[Math.floor(Math.random())] + "</br><b>Catherine:</b></br>" + previousResponse;
+						fallbackResponse = "</br>" + fallBackPossibilities[Math.floor(Math.random())] + "</br><b>Solution Fuse Pizza Bot:</b></br>" + previousResponse;
 						setResponse(fallbackResponse, text);
 					} else {
 						previousResponse = data.result.speech;
@@ -219,7 +219,7 @@
 		}
 
 
-		/** Normal text responses from Catherine bot formatted here. PreventOriginal is
+		/** Normal text responses from Solution Fuse Pizza Bot bot formatted here. PreventOriginal is
 		a boolean that prevents API.ai's reponse to be sent out. Sends out a curated
 		response from the code here. First if statement returns before setting the
 		response so that an enhancedResponse can be displayed directly (for
@@ -237,10 +237,10 @@
 			}
 			if (val != "") {
 				if (enhancedResponse != null) {
-					innerResponse = "<div class='bot_response'><b>Catherine:</b> " + val + enhancedResponse + "</div>"
+					innerResponse = "<div class='bot_response'><b>Solution Fuse Pizza Bot:</b> " + val + enhancedResponse + "</div>"
 					disableInput();
 				} else if (enhancedResponse == null) {
-					innerResponse = "<div class='bot_response'><b>Catherine:</b> " + val + "</div>"
+					innerResponse = "<div class='bot_response'><b>Solution Fuse Pizza Bot:</b> " + val + "</div>"
 					enableInput();
 				}
 				var spaceInner = document.getElementById('space');
@@ -273,7 +273,7 @@
 		function enableInput() {
 			$('#input').attr('readonly', false);
 			$('#input').css('background-color', '#ffffff');
-			$('#input').css('border-color', 'initial');
+			$('#input').css('border-color', '#d4d4d4');
 		}
 
 		/** Customzied responses processed here. Function returns dynamic HTML, which
@@ -354,10 +354,11 @@ functionality.-->
 
 <div id="scrollContainer">
 		<div id="title">
+			<div id = "name"><img src='assets/logo.png' width="40px"/>Solution Fuse Pizza Bot</div>
 			<!-- Menu -->
 		<div class = "row">
-
-				<div id = "menu" class="col-12 men-sec">
+				<div class="col-1 men-sec"></div>
+				<div id = "menu" class="col-10 men-sec">
 					<div id="menu_inside">
 						<div class = "option"><a class = "option" id = "chat_tab" data-scroll href="#title">HOME</a></div>
 						<div class = "option"><a class = "option" data-scroll href="#grid_section_title">HOW IT WORKS</a></div>
@@ -365,21 +366,21 @@ functionality.-->
 						<div class = "option"><a class = "option" data-scroll href="#contact-section">CONTACT US</a></div>
 					</div>
 				</div>
-
+				<div class="col-1 men-sec"></div>
 		</div>
-
-
 		<!-- <div id="fast_easy">Pizza ordering done intelligently.</div> -->
 		<!-- Countdown -->
 		<div class="row countdown-row">
-			<div id = "name"><img src='assets/logo.png' width="40px"/>Solution Fuse Pizza Bot</div>
-			<div class="col-2 countdown-col"></div>
-				<div id="countdown_container" class="col-8 countdown-col">
-				<div id="countdown-text"><span class="timer"></span>pizzas ordered since you arrived.</div>
+			<div class="col-3 countdown-col"></div>
+				<div id="countdown_container" class="col-6 countdown-col">
+				<div id="countdown-text"><span class="timer"></span></div>
+				<div id="countdown-text-2">Pizzas are being ordered <strong>right now</strong></div>
 				<!-- Order Button -->
-				<div id = "direction_icon"><a class = "option" data-scroll href="#chat_section_title" id="bottom_button"><strong>ORDER YOURS NOW</strong></a></div>
+				<div id="direction_container">
+					<div id = "direction_icon"><a class = "option" data-scroll href="#chat_section_title" id="bottom_button"><strong>ORDER YOURS NOW</strong></a></div>
+				</div>
 			</div>
-			<div class="col-2 countdown-col"></div>
+			<div class="col-3 countdown-col"></div>
 		</div>
 
 		</div>
@@ -405,29 +406,29 @@ functionality.-->
 		<div id="chat_container">
 			<div id="chat_section_title" class="section_title">chat bot</div>
 		<div class="row chat_bot">
-			<div class="col-3 mid-sec">
+			<div class="col-2 mid-sec">
 			</div>
-			<div class="col-6 mid-sec">
+			<div class="col-8 mid-sec">
 				<div id = "apiinput">
 					<div id = "chat_name" color="white"Pizza Bot></div>
 					<div id = "space"></div>
 				</div>
 			</div>
-			<div class="col-3 mid-sec">
+			<div class="col-2 mid-sec">
 			</div>
 		</div>
 	<!-- input and send button here -->
 		<div class="row input_section">
-			<div class="col-3 bottom-sec">
+			<div class="col-2 bottom-sec">
 			</div>
-			<div class="col-6 bottom-sec">
+			<div class="col-8 bottom-sec">
 				<!-- <input id="input" color="white" readonly="false" autocomplete="off" type="text"> -->
-				<textarea id="input"rows="4" cols="50" color="white" readonly="false" autocomplete="off" type="text"></textarea>
+				<textarea id="input"rows="4" cols="50" color="white" readonly="false" autocomplete="off" type="text" style="border-style:solid; border-color:white"></textarea>
 			</div>
 			<!-- <div class="col-0-5 bottom-sec">
 				<button id="rec">Send</button>
 			</div> -->
-			<div class="col-3 bottom-sec">
+			<div class="col-2 bottom-sec">
 			</div>
 		</div>
 	</div>
@@ -435,6 +436,21 @@ functionality.-->
 	<div id="contact-section">
 		<div class="row">
 			<div id ="contact_text">Contact Us</div>
+			<form id="contact_form" action="#" method="POST" enctype="multipart/form-data">
+	<div class="row">
+		<label for="name">Your name:</label><br />
+		<input id="name" class="input" name="name" type="text" value="" size="30" /><br />
+	</div>
+	<div class="row">
+		<label for="email">Your email:</label><br />
+		<input id="email" class="input" name="email" type="text" value="" size="30" /><br />
+	</div>
+	<div class="row">
+		<label for="message">Your message:</label><br />
+		<textarea id="message" class="input" name="message" rows="7" cols="30"></textarea><br />
+	</div>
+	<input id="submit_button" type="submit" value="Send email" />
+</form>
 		</div>
 	</div>
 </div>
@@ -443,7 +459,7 @@ functionality.-->
 <script>
     smoothScroll.init();
 		$('.timer').countTo({
-    from: 2,
+    from: 0,
     to: 500,
     speed: 500000,
     refreshInterval: 1000,

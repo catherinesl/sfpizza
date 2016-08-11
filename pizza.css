@@ -12,9 +12,17 @@
     .col-m-11 {width: 91.66%;}
     .col-m-12 {width: 100%;}
 
+    #scrollContainer /* wraps #content, scrolls */
+    {
+      overflow: auto; /* scroll! */
+      position:relative; /* make offsetParent */
+      top: 0; height: 100%; width: 100%; /* fill parent */
+    }
 
     #scrollContainer > #center-items > #name {
-
+      overflow: auto; /* scroll! */
+      position:relative; /* make offsetParent */
+      top: 0; height: 100%; width: 100%; /* fill parent */
       padding: 0px;
   }
 

@@ -5,7 +5,7 @@
 
 
 (function (root, factory) {
-	console.log("root is", root);
+	// console.log("root is", root);
 	if ( typeof define === 'function' && define.amd ) {
 		define([], factory(root));
 	} else if ( typeof exports === 'object' ) {
@@ -20,7 +20,7 @@
 	//
 	// Variables
 	//
-	console.log("initalizing");
+	// console.log("initalizing");
 	var smoothScroll = {}; // Object for public APIs
 	var supports = 'querySelector' in document && 'addEventListener' in root; // Feature test
 	var settings, eventTimeout, fixedHeader, headerHeight, animationInterval;
@@ -49,7 +49,7 @@
 	 * @returns {Object}          Merged values of defaults and options
 	 */
 	var extend = function () {
-		console.log("kill me");
+
 
 		// Variables
 		var extended = {};
@@ -283,9 +283,7 @@
 	 * @returns {Number}
 	 */
 	var getEndLocation = function ( anchor, headerHeight, offset ) {
-		console.log("anchor", anchor);
-		console.log("headerHeight", headerHeight);
-		console.log("offset", offset);
+
 		var location = 0;
 		if (anchor.offsetParent) {
 			console.log("anchor.offsetParent", anchor.offsetParent);
@@ -296,10 +294,7 @@
 			} while (anchor);
 		}
 		location = Math.max(location - headerHeight - offset, 0);
-		console.log("location is", location);
-		console.log("before returning getEndLocation", Math.min(location, getDocumentHeight() - getViewportHeight()));
-		console.log("viewport height", getViewportHeight());
-		console.log("document height", getDocumentHeight());
+
 		return Math.min(location, getDocumentHeight() - getViewportHeight());
 		// return 3500;
 	};
@@ -393,6 +388,7 @@
 		 */
 		var stopAnimateScroll = function (position, endLocation, animationInterval) {
 			var currentLocation = root.pageYOffset;
+
 			if ( position == endLocation || currentLocation == endLocation || ( (root.innerHeight + currentLocation) >= documentHeight ) ) {
 				clearInterval(animationInterval);
 				if ( !isNum ) {
@@ -414,7 +410,7 @@
 			console.log("startLocation", startLocation);
 			console.log("position", position);
 			console.log("distance", distance);
-			root.scrollTo( 0, Math.floor(position) );
+			root.scrollTo( 0, Math.floor(position - 50) );
 			stopAnimateScroll(position, endLocation, animationInterval);
 		};
 

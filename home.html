@@ -57,6 +57,23 @@
 						}
 				});
 
+			//hamburger menu transitions
+			$( ".cross" ).hide();
+			$( ".menu" ).hide();
+			$( ".hamburger" ).click(function() {
+				$( ".menu" ).slideToggle( "slow", function() {
+					$( ".hamburger" ).hide();
+					$( ".cross" ).show();
+				});
+			});
+
+			$( ".cross" ).click(function() {
+				$( ".menu" ).slideToggle( "slow", function() {
+				$( ".cross" ).hide();
+				$( ".hamburger" ).show();
+				});
+			});
+
 			//Sets default greeting message and buttons
 			setResponse(previousResponse);
 			setEnhancedResponse(previousResponse);
@@ -362,9 +379,17 @@
 functionality.-->
 
 <div id="scrollContainer">
+	<!-- hamburger menu -->
+	<div class = "row">
+		<header>
+	  	<button class="hamburger">&#9776;</button>
+	  	<button class="cross">&#735;</button>
+		</header>
+	</div>
+
 	<div class = "row">
 
-			<div id = "menu" class="col-12 men-sec">
+			<div id = "menu" class="col-12 men-sec menu">
 				<div id="menu_inside">
 					<div class = "option"><a class = "option" id = "chat_tab" data-scroll href="#title">HOME</a></div>
 					<div class = "option"><a class = "option" data-scroll href="#grid_section_title">HOW IT WORKS</a></div>

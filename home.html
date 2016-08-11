@@ -34,7 +34,7 @@
 		var previousResponse = "Hello there! How may I help you today? I can help you do the following things:";
 		var accessToken = "3345970f25e64eaf9657ba5494ce0595";
 		var baseUrl = "https://api.api.ai/v1/";
-
+		var menuIsShowing = false;
 		$(document).ready(function() {
 
 
@@ -66,9 +66,9 @@
 					$( ".cross" ).show();
 				});
 				$( "#scrollContainer" ).animate({
-			    top: "+=250",
+			    top: "+=290",
 			  }, 600, function() {
-			    // Animation complete.
+			  	menuIsShowing = true;
 			  });
 			});
 
@@ -78,10 +78,18 @@
 				$( ".hamburger" ).show();
 				});
 				$( "#scrollContainer" ).animate({
-			    top: "-=250",
+			    top: "-=290",
 			  }, 600, function() {
 			    // Animation complete.
 			  });
+			});
+
+			$( ".option" ).click(function() {
+				$( ".menu" ).hide( "slow", function() {
+				$( ".cross" ).hide();
+				$( ".hamburger" ).show();
+				});
+
 			});
 
 

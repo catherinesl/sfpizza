@@ -27,6 +27,8 @@
   	background:#1d1f20;
   	height:50px;
   	line-height:50px;
+  	position: fixed;
+  	z-index: 100;
   }
   .hamburger{
     background:none;
@@ -72,7 +74,8 @@
     padding: 20px;
     height: 250px;
     padding-bottom:30px;
-    position:absolute;
+    margin-top: 40px;
+    position: fixed;
   }
 
   body > .row > #menu > #menu_inside > .option {
@@ -293,7 +296,7 @@ a#bottom_button {
         margin-right: auto;
         left: 0;
         right: 0;
-        z-index:99;
+        z-index: 8;
         text-align: center;
 }
 

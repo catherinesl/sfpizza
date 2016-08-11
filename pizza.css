@@ -26,6 +26,8 @@
       padding: 0px;
   }
 
+  
+
     body > .row > #scrollContainer > #center-items {
       position: absolute;
       margin-left: auto;
@@ -200,7 +202,7 @@ a#bottom_button {
 
 #apiinput {
     background-color: #201816;
-    /* width: 590px; */
+    width: 375px;
     height: 100%;
     padding-top: 30px;
     /* padding-bottom: 10px; */
@@ -256,6 +258,7 @@ a#bottom_button {
 
 .chat_bot {
     background-color: #e1bf43;
+    /* position: absolute; */
 }
 
 
@@ -263,6 +266,8 @@ a#bottom_button {
 .input_section {
     /* background-color: 934D21; */
     padding-bottom: 60px;
+    position: absolute;
+    /* bottom: 38px; */
 }
 #title {
     height: 100vh;

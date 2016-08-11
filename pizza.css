@@ -78,8 +78,63 @@
   .menu li:hover{display: block;    background:#181818; padding:15px 0 15px 0; border-bottom:#1d1f20 1px solid;}
   .menu ul li a { text-decoration:none;  margin: 0px; color:#fff;}
   .menu ul li a:hover {  color: #fff; text-decoration:none;}
-  .menu a{text-decoration:none; color:white;}
-  .menu a:hover{text-decoration:none; color:white;}
+  /*.menu a{text-decoration:none; color:white;}
+  .menu a:hover{text-decoration:none; color:white;}*/
+
+  #scrollContainer > .row > #menu {
+    display:block;
+    padding: 20px;
+    font-size: 14px;
+    letter-spacing: 1px;
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.48);
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    z-index: 99;
+    text-align: center;
+    height: 250px;
+  }
+
+  #scrollContainer > .row > #menu > #menu_inside > .option {
+      display: block;
+      letter-spacing: 3px;
+      padding-top: 20px;
+      padding-bottom: 20px;
+      margin-left: 15px;
+      margin-right: 15px;
+      /* padding-left: 20px; */
+      -o-transition:.15s;
+      -ms-transition:.15s;
+      -moz-transition:.15s;
+      -webkit-transition:.15s;
+       /* ...and now for the proper property */
+      transition:.15s;
+      /* padding-right: 20px; */
+
+  }
+
+
+  #scrollContainer > #how_it_works > #sub {
+    color: white;
+    font-size: 72px;
+    text-align: left;
+    letter-spacing: 12px;
+    text-shadow: 2px 2px 3px #4A332E;
+    display: block;
+    justify-content: center;
+    font-family: 'Anton', sans-serif;
+    margin-top: 36px;
+    padding-bottom: 36px;
+}
+
+#scrollContainer > #how_it_works > #sub > .steps {
+  width:100%;
+  margin-bottom:12px;
+}
+
   }
 
 

@@ -78,18 +78,22 @@
 				$( ".hamburger" ).show();
 				});
 				$( "#scrollContainer" ).animate({
-			    top: "-=290",
+			    top: "0px",
 			  }, 600, function() {
 			    // Animation complete.
 			  });
 			});
 
 			$( ".option" ).click(function() {
-				$( ".menu" ).hide( "slow", function() {
+				$( ".menu" ).hide( 1, function() {
 				$( ".cross" ).hide();
 				$( ".hamburger" ).show();
 				});
+				$( "#scrollContainer" ).animate({
+					top: "0px",
+				}, 600, function() {
 
+				});
 			});
 
 

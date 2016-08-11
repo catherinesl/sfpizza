@@ -1,0 +1,12 @@
+@media screen and (min-device-width: 375px) and (max-device-height: 667px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 2) {
+  #countdown-text {
+      color: black;
+      font-size: 72px;
+      letter-spacing: 3px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      /* position: relative; */
+      font-family: 'Lobster', regular;
+  }
+}

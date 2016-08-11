@@ -3,9 +3,11 @@
 <head>
 	<title>Solution Fuse Pizza Delivery</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta charset="utf-8">
   <link rel="stylesheet" type="text/css" href="pizza.css">
+	<!-- <link rel="stylesheet" type="text/css" media="screen and (min-device-width: 375px) and (max-device-height: 667px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 2)" href="pizzaIos.css"> -->
+
 	<link href='https://fonts.googleapis.com/css?family=Anton|Nunito:300' rel='stylesheet' type='text/css'>
 	<link href='https://fonts.googleapis.com/css?family=Anton|Josefin+Sans' rel='stylesheet' type='text/css'>
 	<link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
@@ -20,12 +22,13 @@
 	<!-- </script> -->
 	<script type="text/javascript">
 		var longNav = false;
+		var keepTrackOfNextResponse = false;
+		var nextResponse = "";
 		var destinationAddress = "";
 		var travelTime = "";
 		var preventOriginal = false;
 		var preventOriginalCount = 0;
 		var hardOrderNums = [];
-		const fallBackPossibilities = ["Please continue...", "Ahh, tell me more.", "Yes, indeed indeed.", "Come, elucidate your thoughts", "Sorry, I didn't quite understand that. Do you mind repeating yourself again?"];
 		var outputString = "";
 		var dialogueCounter = 0;
 		var previousResponse = "Hello there! How may I help you today? I can help you do the following things:";
@@ -80,6 +83,7 @@
 					//If user clicks edit order, change the bot token to another agent.
 					if (selection == "Edit Order") {
 						accessToken = "def5c7f6f5f0410e90412f10fafb0e00";
+
 					} else if (selection == "I know what I want") {
 						//If user knows what he/she wants, activate freestyle mode
 						//where users can directly type in something like
@@ -139,6 +143,10 @@
 			$("#rec").text(recognition ? "Stop" : "Speak");
 		}
 		function send(userAction) {
+			if (keepTrackOfNextResponse == true) {
+				nextResponse = userAction;
+				console.log("nextResponse is: ", nextResponse);
+			}
 			if (userAction == null) {
 				if ($("#input").val() != null) {
 						var text = $("#input").val();
@@ -157,14 +165,9 @@
 				},
 				data: JSON.stringify({ q: text, lang: "en" }),
 				success: function(data) {
-					if (data.result.speech == null || data.result.speech == "") {
-						fallbackResponse = "</br>" + fallBackPossibilities[Math.floor(Math.random())] + "</br><b>Solution Fuse Pizza Bot:</b></br>" + previousResponse;
-						setResponse(fallbackResponse, text);
-					} else {
 						previousResponse = data.result.speech;
 						normalResponse = data.result.speech;
 						window.setTimeout(setResponse(normalResponse, text),1000);
-					}
 				},
 				error: function(userAction) {
 					// setResponse("Our system is currently down right now, sorry about that! Please come back later.");
@@ -292,7 +295,6 @@
 					"<div class = 'car_nav' id = 'right'>&#9654;</div>"+
 					"</div>";
 			}
-
 			if (botResponse.includes("Would you be interested in customizing your pizza?")) {
 				return "<span></br><button class = 'button pulse' id='yes_button' value = 'Yes'>Yes</button><button class = 'button pulse' id='no_button' value = 'No'>No</button></span>";
 			}
@@ -315,8 +317,12 @@
 				var newResponse = "Your order will arive in approximately " + travelTime + ". Your total is 20 dollars. Please include a 15% delivery fee. Thank you for stopping by. Hope to see you another time!"
 				preventOriginal = true;
 				setResponse(newResponse, "");
+			if (botResponse.includes("What is your order confirmation number?")) {
+				keepTrackOfNextResponse = true;
 			}
 		}
+	}
+
 
 
 		/**Calculates delivery time using Google Maps Distance Matrix API.
@@ -349,41 +355,42 @@
 	</script>
 </head>
 <body>
+	<style>
+	
+	</style>
 	<!-- Menu tabs here. Tabs are for display purposes and server no
 functionality.-->
 
 <div id="scrollContainer">
-		<div id="title">
-			<div id = "name"><img src='assets/logo.png' width="40px"/>Solution Fuse Pizza Bot</div>
-			<!-- Menu -->
-		<div class = "row">
-				<div class="col-1 men-sec"></div>
-				<div id = "menu" class="col-10 men-sec">
-					<div id="menu_inside">
-						<div class = "option"><a class = "option" id = "chat_tab" data-scroll href="#title">HOME</a></div>
-						<div class = "option"><a class = "option" data-scroll href="#grid_section_title">HOW IT WORKS</a></div>
-						<div class = "option"><a class = "option" data-scroll href="#chat_container">CHAT BOT</a></div>
-						<div class = "option"><a class = "option" data-scroll href="#contact-section">CONTACT US</a></div>
-					</div>
-				</div>
-				<div class="col-1 men-sec"></div>
-		</div>
-		<!-- <div id="fast_easy">Pizza ordering done intelligently.</div> -->
-		<!-- Countdown -->
-		<div class="row countdown-row">
-			<div class="col-3 countdown-col"></div>
-				<div id="countdown_container" class="col-6 countdown-col">
-				<div id="countdown-text"><span class="timer"></span></div>
-				<div id="countdown-text-2">Pizzas are being ordered <strong>right now</strong></div>
-				<!-- Order Button -->
-				<div id="direction_container">
-					<div id = "direction_icon"><a class = "option" data-scroll href="#chat_section_title" id="bottom_button"><strong>ORDER YOURS NOW</strong></a></div>
+	<div class = "row">
+
+			<div id = "menu" class="col-12 men-sec">
+				<div id="menu_inside">
+					<div class = "option"><a class = "option" id = "chat_tab" data-scroll href="#title">HOME</a></div>
+					<div class = "option"><a class = "option" data-scroll href="#grid_section_title">HOW IT WORKS</a></div>
+					<div class = "option"><a class = "option" data-scroll href="#chat_container">CHAT BOT</a></div>
+					<div class = "option"><a class = "option" data-scroll href="#contact-section">CONTACT US</a></div>
 				</div>
 			</div>
-			<div class="col-3 countdown-col"></div>
-		</div>
 
-		</div>
+	</div>
+		<div id="title"></div>
+			<div id="center-items">
+				<div id = "name"><img src='assets/logo.png' width="40px"/>Solution Fuse Pizza Bot</div>
+				<div class="row countdown-row">
+					<div class="col-4 countdown-col"></div>
+						<div id="countdown_container" class="col-4 countdown-col">
+						<div id="countdown-text"><span class="timer"></span></div>
+						<div id="countdown-text-2">Pizzas are being ordered <strong>right now</strong></div>
+						<!-- Order Button -->
+						<div id="direction_container">
+							<div id = "direction_icon"><a class = "option" data-scroll href="#chat_section_title" id="bottom_button"><strong>START ORDERING!</strong></a></div>
+						</div>
+					</div>
+					<div class="col-4 countdown-col"></div>
+				</div>
+			</div>
+
 		<!-- Grid Title -->
 		<div id="grid_section_title">how it works</div>
 		<!-- Grid thing -->
@@ -394,10 +401,16 @@ functionality.-->
 					<div class="description"><div class="num">1</div><div class="text">Morbi pharetra ipsum eu libero malesuada ultrices.</div></div>
 				</div>
 				<div class="steps" id="second">
-					<div class="description"><div class="num">2</div><div class="text">Sed aliquam ipsum sit amet lectus elementum, quis tincidunt magna scelerisque.</div></div>
+					<div class="description">
+						<div class="num">2</div>
+							<div class="text">Sed aliquam ipsum sit amet lectus elementum, quis tincidunt magna scelerisque.</div>
+						</div>
 				</div>
 				<div class="steps" id="third">
-					<div class="description"><div class="num">3</div><div class="text">Morbi luctus diam id fermentum bibendum.</div></div>
+					<div class="description">
+						<div class="num">3</div>
+						<div class="text">Morbi luctus diam id fermentum bibendum.</div>
+					</div>
 				</div>
 			</div>
 			<div class="col-1 title-blocks"></div>
@@ -436,7 +449,30 @@ functionality.-->
 	<div id="contact-section">
 		<div class="row">
 			<div id ="contact_text">Contact Us</div>
-			<form id="contact_form" action="#" method="POST" enctype="multipart/form-data">
+		</div>
+		<div class="row">
+				<form id="contact_form">
+					<div class="row">
+						<div class="form_section">Your Name: <input class="form_input"></input></div>
+					</div>
+					<div class="row">
+						<div class="form_section">Email Address: <input class="form_input"></input></div>
+					</div>
+					<div class="row">
+						<div class="form_section">Phone Number: <input class="form_input"></input></div>
+					</div>
+					<div class="row">
+						<div class="form_section">Message: <textarea id="form_textarea"></textarea></div>
+					</div>
+				</form>
+		</div>
+
+
+
+
+
+
+			<!-- <form id="contact_form" action="#" method="POST" enctype="multipart/form-data">
 	<div class="row">
 		<label for="name">Your name:</label><br />
 		<input id="name" class="input" name="name" type="text" value="" size="30" /><br />
@@ -450,8 +486,8 @@ functionality.-->
 		<textarea id="message" class="input" name="message" rows="7" cols="30"></textarea><br />
 	</div>
 	<input id="submit_button" type="submit" value="Send email" />
-</form>
-		</div>
+</form> -->
+
 	</div>
 </div>
 </body>

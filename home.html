@@ -39,7 +39,7 @@
 
 
 
-//Use scrollToFixed
+				//Use scrollToFixed
 
 				$('#scrollContainer').scroll(function() {
 						var top = $('#scrollContainer').scrollTop();
@@ -57,44 +57,52 @@
 						}
 				});
 
-			//hamburger menu transitions
-			$( ".cross" ).hide();
-			$( ".menu" ).hide();
-			$( ".hamburger" ).click(function() {
-				$( ".menu" ).slideToggle( "slow", function() {
-					$( ".hamburger" ).hide();
-					$( ".cross" ).show();
-				});
-				$( "#scrollContainer" ).animate({
-			    top: "+=290",
-			  }, 600, function() {
-			  	menuIsShowing = true;
-			  });
-			});
 
-			$( ".cross" ).click(function() {
-				$( ".menu" ).slideToggle( "slow", function() {
-				$( ".cross" ).hide();
-				$( ".hamburger" ).show();
-				});
-				$( "#scrollContainer" ).animate({
-			    top: "0px",
-			  }, 600, function() {
-			    // Animation complete.
-			  });
-			});
+				if (document.documentElement.clientWidth < 667) {
+					//hamburger menu transitions
+					$( ".cross" ).hide();
+					$( ".menu" ).hide();
+					$( ".hamburger" ).click(function() {
+						$( ".menu" ).slideToggle( "slow", function() {
+							$( ".hamburger" ).hide();
+							$( ".cross" ).show();
+						});
+						$( "#scrollContainer" ).animate({
+					    top: "+=290",
+					  }, 600, function() {
+					  	menuIsShowing = true;
+					  });
+					});
 
-			$( ".option" ).click(function() {
-				$( ".menu" ).hide( 1, function() {
-				$( ".cross" ).hide();
-				$( ".hamburger" ).show();
-				});
-				$( "#scrollContainer" ).animate({
-					top: "0px",
-				}, 600, function() {
+					$( ".cross" ).click(function() {
+						$( ".menu" ).slideToggle( "slow", function() {
+						$( ".cross" ).hide();
+						$( ".hamburger" ).show();
+						});
+						$( "#scrollContainer" ).animate({
+					    top: "0px",
+					  }, 600, function() {
+					    // Animation complete.
+					  });
+					});
 
-				});
-			});
+					$( ".option" ).click(function() {
+						$( ".menu" ).hide( 1, function() {
+						$( ".cross" ).hide();
+						$( ".hamburger" ).show();
+						});
+						$( "#scrollContainer" ).animate({
+							top: "0px",
+						}, 600, function() {
+
+						});
+					});
+		// scripts
+	} else {
+		$("header").hide();
+	}
+
+
 
 
 

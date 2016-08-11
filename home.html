@@ -65,6 +65,11 @@
 					$( ".hamburger" ).hide();
 					$( ".cross" ).show();
 				});
+				$( "#scrollContainer" ).animate({
+			    top: "+=250",
+			  }, 600, function() {
+			    // Animation complete.
+			  });
 			});
 
 			$( ".cross" ).click(function() {
@@ -72,9 +77,14 @@
 				$( ".cross" ).hide();
 				$( ".hamburger" ).show();
 				});
+				$( "#scrollContainer" ).animate({
+			    top: "-=250",
+			  }, 600, function() {
+			    // Animation complete.
+			  });
 			});
 
-			
+
 
 			//Sets default greeting message and buttons
 			setResponse(previousResponse);
@@ -379,28 +389,26 @@
 	</style>
 	<!-- Menu tabs here. Tabs are for display purposes and server no
 functionality.-->
+<!-- hamburger menu -->
+<div class = "row">
+	<header>
+		<button class="hamburger">&#9776;</button>
+		<button class="cross">&#735;</button>
+	</header>
+</div>
 
-<div id="scrollContainer">
-	<!-- hamburger menu -->
-	<div class = "row">
-		<header>
-	  	<button class="hamburger">&#9776;</button>
-	  	<button class="cross">&#735;</button>
-		</header>
-	</div>
+<div class = "row">
 
-	<div class = "row">
-
-			<div id = "menu" class="col-12 men-sec menu">
-				<div id="menu_inside">
-					<div class = "option"><a class = "option" id = "chat_tab" data-scroll href="#title">HOME</a></div>
-					<div class = "option"><a class = "option" data-scroll href="#grid_section_title">HOW IT WORKS</a></div>
-					<div class = "option"><a class = "option" data-scroll href="#chat_container">CHAT BOT</a></div>
-					<div class = "option"><a class = "option" data-scroll href="#contact-section">CONTACT US</a></div>
-				</div>
+		<div id = "menu" class="col-12 men-sec menu">
+			<div id="menu_inside">
+				<div class = "option"><a class = "option" id = "chat_tab" data-scroll href="#title">HOME</a></div>
+				<div class = "option"><a class = "option" data-scroll href="#grid_section_title">HOW IT WORKS</a></div>
+				<div class = "option"><a class = "option" data-scroll href="#chat_container">CHAT BOT</a></div>
+				<div class = "option"><a class = "option" data-scroll href="#contact-section">CONTACT US</a></div>
 			</div>
+		</div>
+<div id="scrollContainer">
 
-	</div>
 		<div id="title"></div>
 			<div id="center-items">
 				<div id = "name"><img src='assets/logo.png' width="40px"/>Solution Fuse Pizza Bot</div>
@@ -514,7 +522,7 @@ functionality.-->
 	</div>
 	<input id="submit_button" type="submit" value="Send email" />
 </form> -->
-
+	</div>
 	</div>
 </div>
 </body>

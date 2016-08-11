@@ -12,27 +12,13 @@
   .col-m-11 {width: 91.66%;}
   .col-m-12 {width: 100%;}
 
-  body {
-    /* font-family: 'Josefin Sans', sans-serif; */
-    margin: 0;
-    text-align: center;
-    font-family: 'Josefin Sans', sans-serif;
-    /*background-color: blue;*/
-  }
-
 
   #scrollContainer > #center-items > #name {
-    font-family: 'Lobster', cursive;
-    color: #40342D;
-    font-size: 60px;
-    margin-left: calc(50% - 50%);
-    text-shadow: 3px 3px 0px #e2d0c6;
+
     padding: 0px;
 }
 
   img {
-      /* margin-top: 50px; */
-      margin-right: 20px;
       display: none;
   }
 
@@ -81,38 +67,19 @@
   /*.menu a{text-decoration:none; color:white;}
   .menu a:hover{text-decoration:none; color:white;}*/
 
-  #scrollContainer > .row > #menu {
+  body > .row > #menu {
     display:block;
     padding: 20px;
-    font-size: 14px;
-    letter-spacing: 1px;
-    position: absolute;
-    background-color: rgba(255, 255, 255, 0.9);
-    box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.48);
-    margin-left: auto;
-    margin-right: auto;
-    left: 0;
-    right: 0;
-    z-index: 99;
-    text-align: center;
     height: 250px;
+    padding-bottom:30px;
+    position:absolute;
   }
 
-  #scrollContainer > .row > #menu > #menu_inside > .option {
+  body > .row > #menu > #menu_inside > .option {
       display: block;
-      letter-spacing: 3px;
       padding-top: 20px;
       padding-bottom: 20px;
-      margin-left: 15px;
-      margin-right: 15px;
-      /* padding-left: 20px; */
-      -o-transition:.15s;
-      -ms-transition:.15s;
-      -moz-transition:.15s;
-      -webkit-transition:.15s;
-       /* ...and now for the proper property */
-      transition:.15s;
-      /* padding-right: 20px; */
+
 
   }
 
